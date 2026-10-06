@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827"><title>Physique v5.4</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--good:#166534;--blue:#1d4ed8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+.app{max-width:760px;margin:auto;padding:14px 13px 115px}.top{position:sticky;top:0;z-index:3;background:rgba(245,246,248,.95);backdrop-filter:blur(10px);padding:8px 0}
+h1{margin:0;font-size:24px}.muted,.meta{color:var(--muted);font-size:12px}.nav,.days{display:grid;gap:7px;margin-top:10px}.nav{grid-template-columns:repeat(3,1fr)}.days{grid-template-columns:repeat(4,1fr)}
+button{border:0;border-radius:11px;padding:10px;font-weight:750;background:#e5e7eb;cursor:pointer}button.active,.primary{background:#111827;color:#fff}
+.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:14px;margin:10px 0;box-shadow:0 2px 7px #00000008}
+.row{display:flex;gap:8px;align-items:center;justify-content:space-between}.name{font-size:17px;font-weight:850}
+.grid{display:grid;grid-template-columns:36px 1fr 1fr 1.25fr 44px;gap:6px;align-items:center;margin-top:8px}
+input,select,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:9px;background:white;font:inherit}.center{text-align:center}.head{font-size:10px;color:var(--muted);text-align:center}
+.done{background:#dcfce7;color:var(--good)}.small{padding:7px 9px;font-size:12px}.panel{display:none}.panel.show{display:block}
+.alt{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}.alt.show{display:block}.alt button{margin:3px}
+.timer{position:fixed;bottom:0;left:0;right:0;background:#111827;color:#fff;padding:10px 14px calc(10px + env(safe-area-inset-bottom));z-index:5}.timerin{max-width:760px;margin:auto;display:flex;gap:10px;align-items:center}.clock{font-size:27px;font-weight:900;min-width:88px}.timer button{background:#374151;color:white;padding:8px}
+.badge{display:inline-block;background:#f3f4f6;border-radius:999px;padding:5px 8px;font-size:11px;margin:3px}.rec{margin-top:8px;padding:9px 10px;background:#f9fafb;border-radius:11px;font-size:12px;line-height:1.45}.rec b{font-size:13px}.condition{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:8px}.condition button{padding:8px 3px;font-size:11px}.seed{font-size:11px;color:#6b7280;margin-top:5px}.progress{height:9px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin-top:5px}.bar{height:100%;background:#111827}
+pre{white-space:pre-wrap;font-size:11px;background:#f9fafb;padding:10px;border-radius:10px;max-height:220px;overflow:auto}
+</style><link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#111111">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+</head>
+<body><div class="app">
+<div class="top"><div class="row"><div><h1>Physique <span class="muted">v5.4</span></h1><div class="muted">4 Day Program · adaptive workout log</div></div><button class="small" onclick="exportConfig()">루틴 내보내기</button></div>
+<div class="nav"><button id="n-work" onclick="page('work')">오늘 운동</button><button id="n-progress" onclick="page('progress')">성장</button><button id="n-program" onclick="page('program')">프로그램</button></div></div>
+<section id="work" class="panel"><div class="days" id="days"></div><div id="workout"></div><button class="primary" style="width:100%;padding:14px" onclick="finishWorkout()">오늘 운동 완료</button></section>
+<section id="progress" class="panel"><div id="progressBody"></div></section>
+<section id="program" class="panel">
+<div class="card"><div class="name">Exercise DB</div><p class="meta">운동 자체의 부위 정보를 관리합니다. 기본 DB는 이번에 전달한 전체 운동 리스트를 기반으로 등록되어 있습니다. 새 운동은 자동 학습되며 사용자 추가 항목은 수정/삭제할 수 있습니다.</p><button onclick="showExerciseDb()">운동 DB 보기</button><div id="exerciseDbView" class="meta" style="margin-top:8px;max-height:320px;overflow:auto"></div></div><div class="card"><div class="name">학습된 대체운동 DB</div><p class="meta">직접 입력하거나 운동을 서로 대체하면 같은 역할의 대체운동으로 자동 저장됩니다. 대체 메뉴의 × 버튼으로 개별 삭제할 수 있습니다.</p><button onclick="showAltDb()">DB 보기 / 관리</button><div id="altDbView" class="meta" style="margin-top:8px"></div></div><div class="card"><div class="name">ChatGPT 루틴 업데이트</div><p class="meta">ChatGPT에서 받은 JSON 파일을 선택하면 내용을 확인한 뒤 앱 루틴을 업데이트할 수 있습니다. 운동 기록은 유지됩니다.</p>
+<input id="jsonFile" type="file" accept=".json,application/json" onchange="loadJsonFile(event)" style="margin-top:8px">
+<div id="fileInfo" class="meta" style="margin-top:7px">선택된 파일 없음</div>
+<textarea id="importBox" rows="7" placeholder='JSON 파일을 선택하면 여기에 내용이 표시됩니다. 직접 붙여넣기도 가능합니다.' style="margin-top:8px"></textarea>
+<div class="row" style="margin-top:8px"><button class="primary" onclick="importConfig()">업데이트 적용</button><button onclick="resetConfig()">기본 루틴 복원</button></div><div id="importMsg" class="meta" style="margin-top:8px"></div></div>
+<div class="card"><div class="name">현재 프로그램</div><div id="programBody"></div></div>
+</section></div>
+<div class="timer"><div class="timerin"><div><div class="muted" style="color:#9ca3af">REST</div><div id="clock" class="clock">00:00</div></div><button onclick="addTime(30)">+30초</button><button onclick="stopTimer()">종료</button><span id="timerLabel" class="muted" style="color:#9ca3af;margin-left:auto">대기</span></div></div>
+<script>
+const DEFAULT={
+version:"2026-10-06",
+focus:["측면어깨","상부가슴","등 너비","상부등","팔"],
+routines:{
+"등":[
+{name:"와이드 머신 랫풀다운",sets:4,reps:"8–12",rest:180,role:"등 너비",alts:["일반 랫풀다운","어시스트 풀업"]},
+{name:"라잉 머신 T바로우",sets:4,reps:"8–12",rest:180,role:"상부등",alts:["체스트서포티드 로우","머신 시티드로우","케이블로우"]},
+{name:"원암 버티컬 풀다운",sets:3,reps:"10–15",rest:150,role:"등 너비",alts:["원암 케이블 풀다운","머신 하이로우"]},
+{name:"스트레이트암 풀다운",sets:2,reps:"12–15",rest:120,role:"등 너비",alts:["케이블 풀오버"]},
+{name:"레터럴레이즈",sets:4,reps:"12–20",rest:90,role:"측면어깨",variants:["머신 레터럴레이즈","덤벨 레터럴레이즈"],alts:["케이블 레터럴레이즈"]},
+{name:"인클라인 덤벨 컬",sets:3,reps:"8–15",rest:90,role:"이두",alts:["케이블 컬","머신 컬"]},
+{name:"인클라인 트레드밀",sets:1,reps:"15–25분",rest:0,role:"유산소",type:"cardio",alts:["트레드밀","천국의계단"]}],
+"가슴":[
+{name:"인클라인 체스트프레스",sets:4,reps:"6–10",rest:180,role:"상부가슴",variants:["머신 인클라인 체스트프레스","스미스 인클라인 벤치프레스","인클라인 덤벨프레스"],alts:[]},
+{name:"체스트프레스",sets:3,reps:"8–12",rest:180,role:"가슴",variants:["플레이트 머신 체스트프레스","벤치프레스"],alts:["덤벨 벤치프레스","스미스 벤치프레스"]},
+{name:"인클라인 덤벨 플라이",sets:3,reps:"10–15",rest:120,role:"상부가슴",alts:["로우투하이 케이블 플라이"]},
+{name:"펙덱 플라이",sets:2,reps:"12–15",rest:90,role:"가슴",alts:["케이블 플라이"]},
+{name:"레터럴레이즈",sets:3,reps:"12–20",rest:90,role:"측면어깨",variants:["머신 레터럴레이즈","덤벨 레터럴레이즈"],alts:["케이블 레터럴레이즈"]},
+{name:"삼두 로프 슈퍼세트",sets:3,reps:"8–15 / 10–15",rest:120,role:"삼두",type:"superset",parts:["케이블 로프 푸쉬다운","케이블 로프 오버헤드 트라이셉스 익스텐션"],partReps:["8–15","10–15"],alts:[]},
+{name:"인클라인 트레드밀",sets:1,reps:"15–25분",rest:0,role:"유산소",type:"cardio",alts:["트레드밀","천국의계단"]}],
+"하체":[
+{name:"레그프레스",sets:3,reps:"8–12",rest:180,role:"대퇴사두/둔근",alts:["핵스쿼트 머신"]},
+{name:"레그익스텐션",sets:3,reps:"10–15",rest:120,role:"대퇴사두",alts:[]},
+{name:"레그컬",sets:4,reps:"10–15",rest:120,role:"햄스트링",alts:["시티드 레그컬","라잉 레그컬"]},
+{name:"힙어브덕션/둔근 머신",sets:2,reps:"12–20",rest:120,role:"둔근",alts:["힙어브덕션"]},
+{name:"카프레이즈",sets:3,reps:"10–20",rest:90,role:"종아리",alts:["시티드 카프레이즈"]}],
+"상체":[
+{name:"인클라인 체스트프레스",sets:3,reps:"8–12",rest:180,role:"상부가슴",variants:["머신 인클라인 체스트프레스","스미스 인클라인 벤치프레스","인클라인 덤벨프레스"],alts:[]},
+{name:"랫풀다운",sets:3,reps:"8–12",rest:180,role:"등 너비",alts:["어시스트 풀업","와이드 머신 랫풀다운"]},
+{name:"체스트서포티드 로우",sets:2,reps:"10–15",rest:150,role:"상부등",alts:["라잉 T바로우","머신 시티드로우"]},
+{name:"레터럴레이즈",sets:3,reps:"12–20",rest:90,role:"측면어깨",variants:["머신 레터럴레이즈","덤벨 레터럴레이즈"],alts:["케이블 레터럴레이즈"]},
+{name:"리버스 펙덱",sets:3,reps:"12–20",rest:90,role:"후면어깨",alts:["케이블 리어델트 플라이"]},
+{name:"인클라인 덤벨 컬",sets:2,reps:"10–15",rest:90,role:"이두",alts:["케이블 컬","머신 컬"]},
+{name:"삼두 로프 슈퍼세트",sets:2,reps:"8–15 / 10–15",rest:120,role:"삼두",type:"superset",parts:["케이블 로프 푸쉬다운","케이블 로프 오버헤드 트라이셉스 익스텐션"],partReps:["8–15","10–15"],alts:[]},
+{name:"인클라인 트레드밀",sets:1,reps:"15–25분",rest:0,role:"유산소",type:"cardio",alts:["트레드밀","천국의계단"]}]
+,
+"아파트-등":[
+{name:"랫풀다운",sets:4,reps:"8–12",rest:180,role:"등 너비",alts:[]},
+{name:"스미스 벤트오버 로우",sets:4,reps:"8–12",rest:180,role:"상부등",alts:["바벨 벤트오버 로우"]},
+{name:"인클라인 벤치 원암 케이블 하이로우",sets:3,reps:"10–15",rest:150,role:"등",alts:[]},
+{name:"스트레이트암 풀다운",sets:2,reps:"12–15",rest:120,role:"등 너비",alts:[]},
+{name:"덤벨 레터럴레이즈",sets:4,reps:"12–20",rest:90,role:"측면어깨",alts:[]},
+{name:"인클라인 덤벨 컬",sets:3,reps:"8–15",rest:90,role:"이두",alts:[]},
+{name:"유산소",sets:1,reps:"15–25분",rest:0,role:"유산소",type:"cardio",alts:["트레드밀","천국의계단"]}],
+"아파트-가슴":[
+{name:"인클라인 체스트프레스",sets:4,reps:"6–10",rest:180,role:"상부가슴",variants:["스미스 인클라인 벤치프레스","인클라인 덤벨프레스"],alts:[]},
+{name:"벤치프레스",sets:3,reps:"8–12",rest:180,role:"가슴",alts:[]},
+{name:"인클라인 덤벨 플라이",sets:3,reps:"10–15",rest:120,role:"상부가슴",alts:[]},
+{name:"머신 플라이",sets:2,reps:"12–15",rest:90,role:"가슴",alts:[]},
+{name:"덤벨 레터럴레이즈",sets:3,reps:"12–20",rest:90,role:"측면어깨",alts:[]},
+{name:"삼두 로프 슈퍼세트",sets:3,reps:"8–15 / 10–15",rest:120,role:"삼두",type:"superset",parts:["케이블 로프 푸쉬다운","케이블 로프 오버헤드 트라이셉스 익스텐션"],partReps:["8–15","10–15"],alts:[]},
+{name:"유산소",sets:1,reps:"15–25분",rest:0,role:"유산소",type:"cardio",alts:["트레드밀","천국의계단"]}],
+"아파트-하체":[
+{name:"머신 레그프레스",sets:3,reps:"8–12",rest:180,role:"대퇴사두/둔근",alts:[]},
+{name:"레그 익스텐션",sets:3,reps:"10–15",rest:120,role:"대퇴사두",alts:[]},
+{name:"라잉 레그컬",sets:4,reps:"10–15",rest:120,role:"햄스트링",alts:[]},
+{name:"덤벨 루마니안 데드리프트 (선택)",sets:2,reps:"10–15",rest:180,role:"둔근/햄스트링",alts:[]}],
+"아파트-상체":[
+{name:"인클라인 체스트프레스",sets:3,reps:"8–12",rest:180,role:"상부가슴",variants:["스미스 인클라인 벤치프레스","인클라인 덤벨프레스"],alts:[]},
+{name:"랫풀다운",sets:3,reps:"8–12",rest:180,role:"등 너비",alts:[]},
+{name:"인클라인 벤치 원암 케이블 하이로우",sets:2,reps:"10–15",rest:150,role:"상부등",alts:[]},
+{name:"덤벨 레터럴레이즈",sets:3,reps:"12–20",rest:90,role:"측면어깨",alts:[]},
+{name:"페이스풀",sets:3,reps:"12–20",rest:90,role:"후면어깨/견갑",alts:[]},
+{name:"인클라인 덤벨 컬",sets:2,reps:"10–15",rest:90,role:"이두",alts:[]},
+{name:"삼두 로프 슈퍼세트",sets:2,reps:"8–15 / 10–15",rest:120,role:"삼두",type:"superset",parts:["케이블 로프 푸쉬다운","케이블 로프 오버헤드 트라이셉스 익스텐션"],partReps:["8–15","10–15"],alts:[]},
+{name:"유산소",sets:1,reps:"15–25분",rest:0,role:"유산소",type:"cardio",alts:["트레드밀","천국의계단"]}]
+}};
+
+let cfg=JSON.parse(localStorage.getItem("physique-config")||"null")||structuredClone(DEFAULT);
+Object.keys(DEFAULT.routines).forEach(k=>{if(!cfg.routines[k])cfg.routines[k]=structuredClone(DEFAULT.routines[k])});
+const SEEDS={
+"등":{
+"와이드 머신 랫풀다운":{w:"50",r:"12",note:"Fleek 2026-10-06: 50kg × 12 × 4"},
+"라잉 머신 T바로우":{w:"15",r:"10",note:"Fleek 2026-10-06: 15kg × 10/10/10/12"},
+"스트레이트암 풀다운":{w:"11.3",r:"12",note:"최근 Fleek 기록 기준"},
+"레터럴레이즈":{w:"20",r:"15",note:"머신 선택 시 Fleek 2026-10-06 기록 기준"}
+},
+"가슴":{
+"인클라인 체스트프레스":{w:"60",r:"8",note:"머신 선택 시 최근 기록을 작업세트용으로 보수적으로 환산"},
+"펙덱 플라이":{w:"31.8",r:"12",note:"Fleek 2026-10-03 기록 기준"},
+"레터럴레이즈":{w:"8",r:"15",note:"덤벨 레터럴레이즈 최근 기록 기준"},
+"삼두 로프 슈퍼세트":{w:"13.6",r:"10",note:"최근 케이블 삼두 기록 참고"}
+},
+"하체":{
+"레그프레스":{w:"60",r:"10",note:"과거 기록보다 보수적 복귀 기준"},
+"레그익스텐션":{w:"18.1",r:"10",note:"Fleek 기록 기반 보수적 기준"},
+"레그컬":{w:"27.2",r:"10",note:"Fleek 2026-09-21 기록 기준"},
+"힙어브덕션/둔근 머신":{w:"45",r:"12",note:"Fleek 기록 기준"},
+"카프레이즈":{w:"25",r:"15",note:"Fleek 기록 기준"}
+},
+"상체":{
+"인클라인 체스트프레스":{w:"60",r:"8",note:"최근 가슴 기록 기준"},
+"랫풀다운":{w:"20.4",r:"8",note:"Fleek 2026-10-03 기록 기준"},
+"레터럴레이즈":{w:"8",r:"15",note:"덤벨 레터럴레이즈 최근 기록 기준"},
+"삼두 로프 슈퍼세트":{w:"13.6",r:"10",note:"최근 케이블 삼두 기록 참고"}
+}};
+const CONDITIONS=[
+["verygood","매우좋음"],["good","좋음"],["normal","평범"],["bad","나쁨"],["verybad","매우나쁨"]
+];
+
+let day=localStorage.getItem("physique-day")||"등",remaining=0,timer=null,timerLabel="";
+const effortOptions=`<option value="">느낌</option><option value="easy">🟢 여유</option><option value="good">🔵 적당</option><option value="hard">🟠 빡셈</option><option value="limit">🔴 한계</option>`;
+function page(p){document.querySelectorAll(".panel").forEach(x=>x.classList.remove("show"));document.getElementById(p).classList.add("show");document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));document.getElementById("n-"+p).classList.add("active");if(p==="progress")renderProgress();if(p==="program")renderProgram()}
+function variantKey(d,n){return `physique-variant:${d}:${n}`}
+function selectedVariant(d,ex){return ex.variants?(localStorage.getItem(variantKey(d,ex.name))||ex.variants[0]):ex.name}
+function setVariant(i,v){let ex=cfg.routines[day][i];localStorage.setItem(variantKey(day,ex.name),v);renderWorkout()}
+function recordName(d,ex){return selectedVariant(d,ex)}
+function logKey(d,n){return "physique-log:"+d+":"+n} function draftKey(d,n){return "physique-draft:"+d+":"+n}
+function lastLog(d,n){try{return JSON.parse(localStorage.getItem(logKey(d,n))||"null")}catch{return null}}
+function renderDays(){let el=document.getElementById("days");el.innerHTML="";Object.keys(cfg.routines).forEach(d=>{let b=document.createElement("button");b.textContent=d;b.className=d===day?"active":"";b.onclick=()=>{day=d;localStorage.setItem("physique-day",d);renderWorkout()};el.appendChild(b)})}
+function conditionKey(){return `physique-condition:${day}:${new Date().toISOString().slice(0,10)}`}
+function getCondition(){return localStorage.getItem(conditionKey())||"normal"}
+function setCondition(v){localStorage.setItem(conditionKey(),v);renderWorkout()}
+function conditionAdvice(){
+ let c=getCondition();
+ if(c==="verygood")return "오늘 컨디션이 매우 좋습니다. 기존 추천을 달성하면서 🟢~🔵이면 최소 증량 단위 또는 목표 반복수 상단을 적극적으로 노립니다.";
+ if(c==="good")return "오늘 컨디션이 좋습니다. 기본 계획을 수행하되 여유가 확인되면 반복수 +1~2회를 우선 노립니다.";
+ if(c==="bad")return "오늘 컨디션이 나쁩니다. 중량은 유지하되 목표 반복수 하단과 여유 있는 강도를 우선하고 필요하면 세트를 1개 줄입니다.";
+ if(c==="verybad")return "오늘 컨디션이 매우 나쁩니다. 최소 유효 운동을 목표로 중량/세트 수를 낮추거나 운동을 쉬는 선택도 허용합니다.";
+ return "평범한 컨디션: 현재 추천 루틴과 중량·반복수 계획을 그대로 수행합니다.";
+}
+function adjustedRecommendation(ex,last,base){
+ let c=getCondition(), [lo,hi]=parseRange(ex.reps);
+ if(c==="verygood"){
+   if(base.title.includes("증량")) return base;
+   return {title:"컨디션 매우좋음 · 점진적 과부하 ↑",body:`${base.body} 첫 세트가 🟢~🔵이면 목표 반복수 상단(${hi}회) 또는 가능한 최소 중량 증가를 시도하세요.`};
+ }
+ if(c==="good") return {title:"컨디션 좋음 · 소폭 전진",body:`${base.body} 같은 중량에서 총 반복수 +1~2회를 우선 목표로.`};
+ if(c==="bad") return {title:"컨디션 나쁨 · 보수적 수행",body:`${base.body} 오늘은 목표 하단(${lo}회)과 깔끔한 폼을 우선하세요.`};
+ if(c==="verybad") return {title:"컨디션 매우나쁨 · 최소 수행",body:"평소 기록 갱신은 목표에서 제외. 중량/세트를 낮추거나 회복이 필요하면 쉬어도 됩니다."};
+ return base;
+}
+function parseRange(s){let m=String(s).match(/(\d+)\D+(\d+)/);return m?[+m[1],+m[2]]:[0,999]}
+function recommendation(ex,last){
+ if(ex.type==="superset"){
+   if(!last||!last.sets||!last.sets.length)return adjustedRecommendation(ex,last,{title:"슈퍼세트 첫 기준 만들기",body:"A와 B 모두 10–15회 가능한 중량으로 시작하고 두 운동을 연속 수행한 뒤 휴식하세요."});
+   return adjustedRecommendation(ex,last,{title:"슈퍼세트 유지 →",body:"A/B 각각 지난 기록을 기준으로 같은 중량에서 반복수 +1을 우선 노리고, 모든 세트가 여유로우면 한 운동씩 최소 단위 증량하세요."});
+ }
+ if(!last||!last.sets||!last.sets.length){let seed=SEEDS?.[day]?.[ex.name];let base=seed?{title:"초기 추천값",body:`${seed.w}kg × ${seed.r}회부터 시작 · ${seed.note}`}:{title:"첫 기록 만들기",body:`${ex.reps}회 범위에서 🔵 적당 수준으로 시작`};return adjustedRecommendation(ex,last,base)}
+ let [lo,hi]=parseRange(ex.reps), ss=last.sets.filter(x=>x.w!==""&&x.r!=="");
+ if(!ss.length)return {title:"기록 필요",body:"지난 기록이 부족해 현재 중량을 유지하고 기록부터 쌓아보세요."};
+ let same=ss.every(x=>Number(x.w)===Number(ss[0].w)), reps=ss.map(x=>Number(x.r)||0), eff=ss.map(x=>x.e);
+ let allTop=reps.length>=ex.sets && reps.every(r=>r>=hi);
+ let tooEasy=eff.length && eff.every(e=>e==="easy");
+ let tooHard=eff.some(e=>e==="limit") || reps.some(r=>r<lo);
+ let mostlyGood=eff.filter(e=>e==="good"||e==="hard").length>=Math.ceil(ss.length/2);
+ if(allTop && same && !tooHard) return adjustedRecommendation(ex,last,{title:"증량 권장 ↑",body:`지난번 ${ss[0].w}kg에서 목표 상단 ${hi}회를 모두 달성. 다음 가능한 최소 단위로 증량하고 ${lo}회 이상을 목표로.`});
+ if(tooEasy && same) return adjustedRecommendation(ex,last,{title:"소폭 증량 고려 ↑",body:"모든 세트가 🟢 여유였습니다. 다음 가능한 최소 단위 증량을 고려하세요."});
+ if(tooHard) return adjustedRecommendation(ex,last,{title:"중량 유지 또는 소폭 감량",body:`🔴 한계 또는 목표 하단(${lo}회) 미달이 있었습니다. 우선 폼과 목표 반복 범위를 회복하세요.`});
+ let total=reps.reduce((a,b)=>a+b,0);
+ return adjustedRecommendation(ex,last,{title:"현재 중량 유지 →",body:`지난번 총 ${total}회. 같은 중량에서 총 반복수 +1~2회 또는 같은 반복수에서 더 여유로운 강도를 목표로.${mostlyGood?" 현재 강도는 적절한 편입니다.":""}`});
+}
+function renderWorkout(){
+ renderDays();let root=document.getElementById("workout");root.innerHTML=`<div class="card"><div class="name">오늘 컨디션은?</div><div class="condition">${CONDITIONS.map(([v,l])=>`<button class="${getCondition()===v?"active":""}" onclick="setCondition('${v}')">${l}</button>`).join("")}</div><div class="rec">${conditionAdvice()}</div></div>`;
+ cfg.routines[day].forEach((ex,i)=>{
+  let chosen=selectedVariant(day,ex), recName=chosen, last=lastLog(day,recName), draft=JSON.parse(localStorage.getItem(draftKey(day,recName))||"null");
+  let seed=(!last&&!draft)?SEEDS?.[day]?.[ex.name]:null;
+  let isCardio=ex.type==="cardio"||ex.role==="유산소", isSuper=ex.type==="superset", displaySets=isCardio?ex.sets:effectiveSets(i);
+  let prev=last?(isCardio?`${last.distance||"-"} km · ${last.minutes||"-"}분`:isSuper?last.sets.map(s=>`${s.w1||"-"}×${s.r1||"-"} + ${s.w2||"-"}×${s.r2||"-"} ${icon(s.e)}`).join(" · "):last.sets.map(s=>`${s.w||"-"}kg×${s.r||"-"} ${icon(s.e)}`).join(" · ")):"기록 없음";
+  let rr=isCardio?"":(()=>{let q=recommendation(ex,last);return `<div class="rec"><b>${q.title}</b><br>${q.body}</div>`})();
+  let variantUI=ex.variants?`<select onchange="setVariant(${i},this.value)" style="margin-top:7px">${ex.variants.map(v=>`<option ${v===chosen?"selected":""}>${v}</option>`).join("")}</select>`:"";
+  let c=document.createElement("div");c.className="card";
+  c.innerHTML=`<div class="row"><div><div class="name">${ex.name}</div><div class="meta">${ex.role} · ${isCardio?ex.reps:`${displaySets}세트 × ${ex.reps} · 휴식 <b>${fmt(ex.rest)}</b>`}</div>${variantUI}</div><div>${isCardio?"":`<button class="small" onclick="editRest(${i})">⏱</button>`} <button class="small" onclick="toggleAlt(${i})">대체</button></div></div>
+  <div class="meta" style="margin-top:7px">지난 기록${ex.variants?` (${chosen})`:""}: ${prev}</div>${rr}
+  ${isCardio?"":`<div class="row" style="margin-top:9px"><div><span class="meta">입력 적용</span> <button id="mode-all-${i}" class="small ${getApplyMode(i)==="all"?"active":""}" onclick="setApplyMode(${i},'all')">전체</button> <button id="mode-one-${i}" class="small ${getApplyMode(i)==="one"?"active":""}" onclick="setApplyMode(${i},'one')">1세트</button></div><div><select id="setmode-${i}" onchange="setSetMode(${i},this.value)" style="width:auto;padding:7px;font-size:12px"><option value="today" ${getSetMode(i)==="today"?"selected":""}>오늘만</option><option value="default" ${getSetMode(i)==="default"?"selected":""}>기본 변경</option></select> <button class="small" onclick="changeSets(${i},-1)">− 세트</button> <button class="small" onclick="changeSets(${i},1)">＋ 세트</button></div></div>`}
+  <div id="rows-${i}"></div><div class="alt" id="alt-${i}"></div>`;
+  root.appendChild(c);let rows=c.querySelector("#rows-"+i);
+  if(isCardio){
+    rows.innerHTML=`<div class="grid" style="grid-template-columns:1fr 1fr 52px"><div class="head">거리 (km)</div><div class="head">시간 (분)</div><div class="head">완료</div></div><div class="grid" style="grid-template-columns:1fr 1fr 52px"><input id="dist-${i}" inputmode="decimal" placeholder="예: 1.8" value="${draft?.distance||""}" oninput="saveDraft(${i})"><input id="min-${i}" inputmode="decimal" placeholder="예: 20" value="${draft?.minutes||""}" oninput="saveDraft(${i})"><button id="cardio-c-${i}" class="${draft?.done?"done":""}" onclick="completeCardio(${i})">${draft?.done?"✓":"○"}</button></div>`;
+  } else if(isSuper){
+    rows.innerHTML=`<div class="meta" style="margin-top:10px"><b>A.</b> ${ex.parts[0]} ${ex.partReps?.[0]||ex.reps}회 → 바로 <b>B.</b> ${ex.parts[1]} ${ex.partReps?.[1]||ex.reps}회 → 세트 완료 후 휴식</div><div class="grid" style="grid-template-columns:32px 1fr 1fr 1fr 1fr 1.1fr 42px"><div class="head">SET</div><div class="head">A kg</div><div class="head">A 회</div><div class="head">B kg</div><div class="head">B 회</div><div class="head">강도</div><div class="head">✓</div></div>`;
+    let warm=draft?.warmup||{};
+    for(let s=0;s<displaySets;s++){let ds=draft?.sets?.[s]||{};rows.insertAdjacentHTML("beforeend",`<div class="grid" style="grid-template-columns:32px 1fr 1fr 1fr 1fr 1.1fr 42px"><div class="center"><b>${s+1}</b></div><input id="w1-${i}-${s}" inputmode="decimal" value="${ds.w1||""}" placeholder="kg" oninput="propagateSuper(${i},${s},'w1')"><input id="r1-${i}-${s}" inputmode="numeric" value="${ds.r1||""}" placeholder="회" oninput="propagateSuper(${i},${s},'r1')"><input id="w2-${i}-${s}" inputmode="decimal" value="${ds.w2||""}" placeholder="kg" oninput="propagateSuper(${i},${s},'w2')"><input id="r2-${i}-${s}" inputmode="numeric" value="${ds.r2||""}" placeholder="회" oninput="propagateSuper(${i},${s},'r2')"><select id="e-${i}-${s}" onchange="saveDraft(${i})">${effortOptions}</select><button id="c-${i}-${s}" class="${ds.done?"done":""}" onclick="completeSet(${i},${s})">${ds.done?"✓":"○"}</button></div>`);document.getElementById(`e-${i}-${s}`).value=ds.e||""}
+  } else {
+    rows.innerHTML=`<div class="grid"><div class="head">SET</div><div class="head">KG</div><div class="head">REPS</div><div class="head">강도</div><div class="head">✓</div></div>`;
+    let warm=draft?.warmup||{};
+    rows.insertAdjacentHTML("beforeend",`<div class="grid" style="opacity:.82"><div class="center"><b>0</b></div><input id="ww-${i}" inputmode="decimal" value="${warm.w||""}" placeholder="선택" oninput="saveDraft(${i})"><input id="wr-${i}" inputmode="numeric" value="${warm.r||""}" placeholder="선택" oninput="saveDraft(${i})"><div class="center meta">워밍업</div><button id="wc-${i}" class="${warm.done?"done":""}" onclick="completeWarmup(${i})">${warm.done?"✓":"○"}</button></div>`);
+    for(let s=0;s<displaySets;s++){let ds=draft?.sets?.[s]||{};if(seed){ds={...ds,w:ds.w||seed.w,r:ds.r||seed.r}}rows.insertAdjacentHTML("beforeend",`<div class="grid"><div class="center"><b>${s+1}</b></div><input id="w-${i}-${s}" inputmode="decimal" value="${ds.w||""}" placeholder="kg" oninput="propagate(${i},${s},'w')"><input id="r-${i}-${s}" inputmode="numeric" value="${ds.r||""}" placeholder="회" oninput="propagate(${i},${s},'r')"><select id="e-${i}-${s}" onchange="saveDraft(${i})">${effortOptions}</select><button id="c-${i}-${s}" class="${ds.done?"done":""}" onclick="completeSet(${i},${s})">${ds.done?"✓":"○"}</button></div>`);document.getElementById(`e-${i}-${s}`).value=ds.e||""}
+  }
+  renderAlt(i);
+ });
+}
+function icon(e){return e==="easy"?"🟢":e==="good"?"🔵":e==="hard"?"🟠":e==="limit"?"🔴":""}
+function setModeKey(i){let ex=cfg.routines[day][i];return `physique-setmode:${day}:${ex.name}`}
+function getSetMode(i){return localStorage.getItem(setModeKey(i))||"today"}
+function setSetMode(i,m){localStorage.setItem(setModeKey(i),m)}
+function todaySetsKey(i){let ex=cfg.routines[day][i];return `physique-todaysets:${day}:${ex.name}`}
+function effectiveSets(i){let ex=cfg.routines[day][i],v=Number(localStorage.getItem(todaySetsKey(i)));return v>0?v:ex.sets}
+function changeSets(i,delta){
+ let ex=cfg.routines[day][i]; if(ex.type==="cardio"||ex.role==="유산소")return;
+ saveDraft(i);
+ let mode=getSetMode(i), old=effectiveSets(i), next=Math.max(1,Math.min(12,old+delta));
+ if(next===old)return;
+ let d=JSON.parse(localStorage.getItem(draftKey(day,ex.name))||"null");
+ if(delta<0&&d?.sets?.[next]?.done && !confirm(`완료된 ${old}세트를 제거할까요?`))return;
+ if(mode==="default"){ex.sets=next;localStorage.removeItem(todaySetsKey(i));saveConfig()}
+ else localStorage.setItem(todaySetsKey(i),String(next));
+ if(d?.sets){d.sets=d.sets.slice(0,next);localStorage.setItem(draftKey(day,ex.name),JSON.stringify(d))}
+ renderWorkout()
+}
+function modeKey(i){let ex=cfg.routines[day][i];return `physique-applymode:${day}:${ex.name}`}
+function getApplyMode(i){return localStorage.getItem(modeKey(i))||"all"}
+function setApplyMode(i,m){localStorage.setItem(modeKey(i),m);let a=document.getElementById(`mode-all-${i}`),o=document.getElementById(`mode-one-${i}`);if(a&&o){a.classList.toggle("active",m==="all");o.classList.toggle("active",m==="one")}}
+function propagate(i,s,field){
+ let ex=cfg.routines[day][i],srcEl=document.getElementById(`${field}-${i}-${s}`);
+ if(getApplyMode(i)==="all"){
+  for(let k=s+1;k<effectiveSets(i);k++){
+   let done=document.getElementById(`c-${i}-${k}`)?.classList.contains("done");
+   if(!done){let el=document.getElementById(`${field}-${i}-${k}`);if(el)el.value=srcEl.value}
+  }
+ }
+ saveDraft(i)
+}
+function saveDraft(i){
+ let ex=cfg.routines[day][i], recName=recordName(day,ex), isCardio=ex.type==="cardio"||ex.role==="유산소",isSuper=ex.type==="superset",count=isCardio?ex.sets:effectiveSets(i);
+ if(isCardio){localStorage.setItem(draftKey(day,recName),JSON.stringify({distance:document.getElementById(`dist-${i}`).value,minutes:document.getElementById(`min-${i}`).value,done:document.getElementById(`cardio-c-${i}`).classList.contains("done")}));return}
+ let data={sets:[]};
+ if(!isSuper)data.warmup={w:document.getElementById(`ww-${i}`).value,r:document.getElementById(`wr-${i}`).value,done:document.getElementById(`wc-${i}`).classList.contains("done")};
+ for(let s=0;s<count;s++){
+  if(isSuper)data.sets.push({w1:document.getElementById(`w1-${i}-${s}`).value,r1:document.getElementById(`r1-${i}-${s}`).value,w2:document.getElementById(`w2-${i}-${s}`).value,r2:document.getElementById(`r2-${i}-${s}`).value,e:document.getElementById(`e-${i}-${s}`).value,done:document.getElementById(`c-${i}-${s}`).classList.contains("done")});
+  else data.sets.push({w:document.getElementById(`w-${i}-${s}`).value,r:document.getElementById(`r-${i}-${s}`).value,e:document.getElementById(`e-${i}-${s}`).value,done:document.getElementById(`c-${i}-${s}`).classList.contains("done")});
+ }
+ localStorage.setItem(draftKey(day,recName),JSON.stringify(data))
+}
+function propagateSuper(i,s,field){let ex=cfg.routines[day][i],el=document.getElementById(`${field}-${i}-${s}`);if(getApplyMode(i)==="all"){for(let k=s+1;k<effectiveSets(i);k++){if(!document.getElementById(`c-${i}-${k}`)?.classList.contains("done"))document.getElementById(`${field}-${i}-${k}`).value=el.value}}saveDraft(i)}
+function completeWarmup(i){let b=document.getElementById(`wc-${i}`);b.classList.toggle("done");b.textContent=b.classList.contains("done")?"✓":"○";saveDraft(i)}
+function completeCardio(i){let b=document.getElementById(`cardio-c-${i}`);b.classList.toggle("done");b.textContent=b.classList.contains("done")?"✓":"○";saveDraft(i)}
+function completeSet(i,s){let b=document.getElementById(`c-${i}-${s}`);b.classList.toggle("done");b.textContent=b.classList.contains("done")?"✓":"○";saveDraft(i);if(b.classList.contains("done"))startTimer(cfg.routines[day][i].rest,cfg.routines[day][i].name)}
+function toggleAlt(i){document.getElementById("alt-"+i).classList.toggle("show")}
+const BUILTIN_EXERCISE_DB={"머신 플라이(팩 덱 플라이)":{"primary":"가슴","muscles":["가슴"],"source":"사용자 운동 리스트"},"케이블 로프 트라이셉 익스텐션(트라이셉 로프 푸시다운)":{"primary":"삼두","muscles":["삼두"],"source":"사용자 운동 리스트"},"머신 레터럴 레이즈":{"primary":"어깨","muscles":["어깨"],"source":"사용자 운동 리스트"},"인클라인 트레드밀(마이마운틴)":{"primary":"대퇴사두","muscles":["대퇴사두","햄스트링"],"source":"사용자 운동 리스트"},"케이블 스트레이트 암 풀다운":{"primary":"등","muscles":["등","어깨"],"source":"사용자 운동 리스트"},"랫 풀 다운":{"primary":"등","muscles":["등","이두"],"source":"사용자 운동 리스트"},"시티드 레그 컬":{"primary":"햄스트링","muscles":["햄스트링","종아리"],"source":"사용자 운동 리스트"},"머신 라잉 티 바 로우":{"primary":"등","muscles":["등","이두"],"source":"사용자 운동 리스트"},"바벨 플랫 벤치 프레스":{"primary":"가슴","muscles":["가슴","삼두"],"source":"사용자 운동 리스트"},"어시스티드 머신 풀 업":{"primary":"등","muscles":["등","이두"],"source":"사용자 운동 리스트"},"케이블 페이스 풀":{"primary":"어깨","muscles":["어깨","이두"],"source":"사용자 운동 리스트"},"케이블 시티드 로우":{"primary":"등","muscles":["등","이두"],"source":"사용자 운동 리스트"},"불가리안 스플릿 스쿼트":{"primary":"대퇴사두","muscles":["대퇴사두","둔근"],"source":"사용자 운동 리스트"},"플레이트 벤치 프레스":{"primary":"가슴","muscles":["가슴","어깨"],"source":"사용자 운동 리스트"},"머신 숄더 프레스":{"primary":"어깨","muscles":["어깨","삼두"],"source":"사용자 운동 리스트"},"머신 프리처 컬":{"primary":"이두","muscles":["이두"],"source":"사용자 운동 리스트"},"케이블 오버헤드 트라이셉 익스텐션":{"primary":"삼두","muscles":["삼두"],"source":"사용자 운동 리스트"},"머신 벤트 오버 레터럴 레이즈":{"primary":"어깨","muscles":["어깨","등"],"source":"사용자 운동 리스트"},"바벨 바이셉 컬":{"primary":"이두","muscles":["이두","전완"],"source":"사용자 운동 리스트"},"덤벨 레터럴 레이즈(사이드 레터럴 레이즈)":{"primary":"어깨","muscles":["어깨"],"source":"사용자 운동 리스트"},"레그 프레스":{"primary":"대퇴사두","muscles":["대퇴사두","종아리"],"source":"사용자 운동 리스트"},"맥 그립 랫 풀 다운":{"primary":"등","muscles":["등","이두"],"source":"사용자 운동 리스트"},"덤벨 해머 컬":{"primary":"이두","muscles":["이두","전완"],"source":"사용자 운동 리스트"},"바벨 루마니안 데드리프트":{"primary":"햄스트링","muscles":["햄스트링","등"],"source":"사용자 운동 리스트"},"스미스 머신 오버헤드 숄더 프레스":{"primary":"어깨","muscles":["어깨","삼두"],"source":"사용자 운동 리스트"},"머신 로우 로우":{"primary":"등","muscles":["등"],"source":"사용자 운동 리스트"},"스미스 머신 바벨 로우":{"primary":"등","muscles":["등"],"source":"사용자 운동 리스트"},"머신 리버스 플라이(팩덱 리어 델트, 머신 리어 델트 플라이)":{"primary":"어깨","muscles":["어깨","등"],"source":"사용자 운동 리스트"},"머신 핵 스쿼트":{"primary":"대퇴사두","muscles":["대퇴사두","둔근"],"source":"사용자 운동 리스트"},"스미스 머신 스쿼트":{"primary":"대퇴사두","muscles":["대퇴사두","둔근"],"source":"사용자 운동 리스트"},"머신 인클라인 벤치 프레스":{"primary":"가슴","muscles":["가슴","삼두"],"source":"사용자 운동 리스트"},"케이블 해머 컬":{"primary":"이두","muscles":["이두","전완"],"source":"사용자 운동 리스트"},"스미스 머신 데드리프트":{"primary":"햄스트링","muscles":["햄스트링","등"],"source":"사용자 운동 리스트"},"케이블 체스트 프레스":{"primary":"가슴","muscles":["가슴","어깨"],"source":"사용자 운동 리스트"},"바벨 스쿼트":{"primary":"대퇴사두","muscles":["대퇴사두","둔근"],"source":"사용자 운동 리스트"},"바벨 라잉 트라이셉스 익스텐션(스컬크러셔)":{"primary":"삼두","muscles":["삼두","전완"],"source":"사용자 운동 리스트"},"원 암 케이블 레터럴 레이즈":{"primary":"어깨","muscles":["어깨"],"source":"사용자 운동 리스트"},"머신 와이드 풀 다운":{"primary":"등","muscles":["등","어깨"],"source":"사용자 운동 리스트"},"트레드밀 러닝(러닝머신)":{"primary":"대퇴사두","muscles":["대퇴사두","햄스트링"],"source":"사용자 운동 리스트"},"스미스 밀리터리 프레스":{"primary":"어깨","muscles":["어깨","삼두"],"source":"사용자 운동 리스트"},"덤벨 인클라인 컬":{"primary":"이두","muscles":["이두","전완"],"source":"사용자 운동 리스트"},"스텝 밀":{"primary":"대퇴사두","muscles":["대퇴사두","햄스트링"],"source":"사용자 운동 리스트"},"머신 하이 로우":{"primary":"등","muscles":["등"],"source":"사용자 운동 리스트"},"인클라인 체스트 프레스":{"primary":"가슴","muscles":["가슴","어깨"],"source":"사용자 운동 리스트"},"머신 시티드 로우":{"primary":"등","muscles":["등","이두"],"source":"사용자 운동 리스트"},"덤벨 인클라인 해머 컬":{"primary":"이두","muscles":["이두"],"source":"사용자 운동 리스트"},"플레이트 힙 쓰러스트":{"primary":"둔근","muscles":["둔근"],"source":"사용자 운동 리스트"},"덤벨 인클라인 로우":{"primary":"등","muscles":["등","이두"],"source":"사용자 운동 리스트"},"원 암 덤벨 로우":{"primary":"등","muscles":["등","이두"],"source":"사용자 운동 리스트"},"레그 프레스 머신 카프 레이즈":{"primary":"종아리","muscles":["종아리"],"source":"사용자 운동 리스트"},"덤벨 플랫 벤치 프레스":{"primary":"가슴","muscles":["가슴","삼두"],"source":"사용자 운동 리스트"},"이지바 바이셉 컬":{"primary":"이두","muscles":["이두","전완"],"source":"사용자 운동 리스트"},"케이블 시티드 하이 로우":{"primary":"등","muscles":["등"],"source":"사용자 운동 리스트"},"케이블 바이셉 컬":{"primary":"이두","muscles":["이두"],"source":"사용자 운동 리스트"},"이지바 라잉 트라이셉스 익스텐션(스컬크러셔)":{"primary":"삼두","muscles":["삼두","전완"],"source":"사용자 운동 리스트"},"머신 디클라인 벤치 프레스":{"primary":"가슴","muscles":["가슴","삼두"],"source":"사용자 운동 리스트"},"스미스 머신 벤치 프레스":{"primary":"가슴","muscles":["가슴","삼두"],"source":"사용자 운동 리스트"},"케이블 리버스 컬":{"primary":"이두","muscles":["이두","전완"],"source":"사용자 운동 리스트"},"원 암 케이블 트라이셉 익스텐션":{"primary":"삼두","muscles":["삼두"],"source":"사용자 운동 리스트"},"클로즈 그립 랫 풀 다운":{"primary":"등","muscles":["등","어깨"],"source":"사용자 운동 리스트"},"프론트 로우(리버스 그립 래터럴 풀 다운)":{"primary":"등","muscles":["등"],"source":"사용자 운동 리스트"},"스미스 머신 벤트 오버 로우":{"primary":"등","muscles":["등","삼두"],"source":"사용자 운동 리스트"},"케이블 벤트 오버 로우":{"primary":"등","muscles":["등","이두"],"source":"사용자 운동 리스트"},"머신 딥스":{"primary":"삼두","muscles":["삼두","어깨"],"source":"사용자 운동 리스트"},"머신 레그 프레스":{"primary":"대퇴사두","muscles":["대퇴사두","둔근"],"source":"사용자 운동 리스트"},"스컬크러셔":{"primary":"삼두","muscles":["삼두"],"source":"사용자 운동 리스트"},"페이스풀":{"primary":"어깨","muscles":["어깨"],"source":"사용자 운동 리스트"},"랫풀다운":{"primary":"등","muscles":["등","이두"],"source":"사용자 운동 리스트"},"스트레이트암 풀다운":{"primary":"등","muscles":["등","어깨"],"source":"사용자 운동 리스트"},"인클라인 덤벨 컬":{"primary":"이두","muscles":["이두","전완"],"source":"사용자 운동 리스트"},"덤벨 레터럴레이즈":{"primary":"어깨","muscles":["어깨"],"source":"사용자 운동 리스트"},"벤치프레스":{"primary":"가슴","muscles":["가슴","삼두"],"source":"사용자 운동 리스트"},"인클라인 덤벨프레스":{"primary":"가슴","muscles":["가슴","삼두"],"source":"사용자 운동 리스트"},"스미스 인클라인 벤치프레스":{"primary":"가슴","muscles":["가슴","삼두"],"source":"사용자 운동 리스트"},"인클라인 벤치 원암 케이블 하이로우":{"primary":"등","muscles":["등","이두"],"source":"사용자 운동 리스트"},"라잉 레그컬":{"primary":"햄스트링","muscles":["햄스트링"],"source":"사용자 운동 리스트"},"레그 익스텐션":{"primary":"대퇴사두","muscles":["대퇴사두"],"source":"사용자 운동 리스트"},"덤벨 루마니안 데드리프트 (선택)":{"primary":"햄스트링","muscles":["햄스트링","둔근"],"source":"사용자 운동 리스트"},"케이블 로프 푸쉬다운":{"primary":"삼두","muscles":["삼두"],"source":"사용자 운동 리스트"},"케이블 로프 오버헤드 트라이셉스 익스텐션":{"primary":"삼두","muscles":["삼두"],"source":"사용자 운동 리스트"}};
+function userExerciseDb(){try{return JSON.parse(localStorage.getItem("physique-exercise-db")||"{}")}catch{return {}}}
+function saveUserExerciseDb(db){localStorage.setItem("physique-exercise-db",JSON.stringify(db))}
+function exerciseProfile(name){return userExerciseDb()[name]||BUILTIN_EXERCISE_DB[name]||null}
+function normalizeRole(role){
+ const m={"상부가슴":"가슴","가슴":"가슴","삼두":"삼두","이두":"이두","측면어깨":"어깨","후면어깨/견갑":"어깨","등 너비":"등","상부등":"등","등":"등","대퇴사두/둔근":"대퇴사두","둔근/햄스트링":"햄스트링","대퇴사두":"대퇴사두","햄스트링":"햄스트링","종아리":"종아리","유산소":"유산소"};
+ return m[role]||role
+}
+function learnUnknownExercise(name,slotRole){
+ let db=userExerciseDb(),primary=normalizeRole(slotRole);
+ db[name]={primary:primary,muscles:[primary],source:"사용자 추가"};
+ saveUserExerciseDb(db);return db[name]
+}
+function altDbKey(){return "physique-alt-db"}
+function getAltDb(){try{return JSON.parse(localStorage.getItem(altDbKey())||"{}")}catch{return {}}}
+function saveAltDb(db){localStorage.setItem(altDbKey(),JSON.stringify(db))}
+function roleDb(role){let db=getAltDb();return Array.isArray(db[role])?db[role]:[]}
+function addToAltDb(role,name){name=(name||"").trim();if(!name)return;let db=getAltDb();db[role]=Array.isArray(db[role])?db[role]:[];if(!db[role].includes(name))db[role].push(name);saveAltDb(db)}
+function removeFromAltDb(role,name){let db=getAltDb();db[role]=(db[role]||[]).filter(x=>x!==name);saveAltDb(db);renderWorkout()}
+function renderAlt(i){
+ let ex=cfg.routines[day][i],a=document.getElementById("alt-"+i),fixed=Array.isArray(ex.alts)?ex.alts:[], learned=roleDb(ex.role);
+ let all=[...new Set([...fixed,...learned])].filter(x=>x&&x!==ex.name);
+ let buttons=all.length?all.map(x=>`<span style="display:inline-flex;align-items:center;gap:2px;margin:2px"><button class="small" onclick='replaceExercise(${i},${JSON.stringify(x)})'>${x}</button>${learned.includes(x)?`<button class="small" title="DB에서 삭제" onclick='removeFromAltDb(${JSON.stringify(ex.role)},${JSON.stringify(x)})'>×</button>`:""}</span>`).join(""):`<span class="meta">등록된 대체운동 없음 · 아래에서 직접 입력 가능</span>`;
+ a.innerHTML=`<div class="meta">대체운동 · 같은 역할(${ex.role})의 학습된 운동도 표시됩니다.</div>${buttons}<div class="row" style="margin-top:8px"><input id="custom-${i}" placeholder="새 운동 직접 입력"><button class="small primary" onclick="customReplace(${i})">사용</button></div>`
+}
+function replaceExercise(i,n){
+ let old=cfg.routines[day][i],oldName=old.name,role=old.role;if(oldName===n)return;
+ let p=exerciseProfile(n),slot=normalizeRole(role);
+ if(p && p.primary!==slot && !p.muscles.includes(slot)){
+   if(!confirm(`⚠️ ${n}은(는) 운동 DB에서 '${p.primary}' 운동으로 분류되어 있습니다.\n현재 '${slot}' 슬롯에 사용해도 분석에서는 '${p.primary}' 운동으로 집계됩니다.\n계속할까요?`))return
+ }
+ if(!p)p=learnUnknownExercise(n,role);
+ addToAltDb(role,oldName);addToAltDb(role,n);
+ cfg.routines[day][i]={...old,name:n,variants:undefined,exerciseDbName:n};
+ localStorage.setItem("physique-config",JSON.stringify(cfg));renderWorkout()
+} function customReplace(i){
+ let el=document.getElementById("custom-"+i),n=(el?.value||"").trim();if(!n)return;
+ let ex=cfg.routines[day][i];
+ if(!exerciseProfile(n)){
+   let slot=normalizeRole(ex.role);
+   if(!confirm(`'${n}'은(는) 아직 운동 DB에 없습니다.\n우선 '${slot}' 운동으로 등록할까요?\n(프로그램 화면에서 나중에 분류를 수정/삭제할 수 있습니다.)`))return;
+   learnUnknownExercise(n,ex.role)
+ }
+ addToAltDb(ex.role,n);replaceExercise(i,n)
+}
+function editRest(i){let ex=cfg.routines[day][i],v=prompt(`${ex.name} 휴식시간(초)`,ex.rest);if(v!==null&&Number(v)>=0){ex.rest=Number(v);saveConfig();renderWorkout()}}
+function finishWorkout(){cfg.routines[day].forEach((ex,i)=>{let rn=recordName(day,ex),d=JSON.parse(localStorage.getItem(draftKey(day,rn))||"null");if(d){d.date=new Date().toISOString();d.condition=getCondition();d.variant=rn;localStorage.setItem(logKey(day,rn),JSON.stringify(d));localStorage.removeItem(draftKey(day,rn));localStorage.removeItem(todaySetsKey(i))}});alert("운동 기록 저장 완료");renderWorkout()}
+function startTimer(s,l){clearInterval(timer);remaining=s;timerLabel=l;tick();timer=setInterval(()=>{remaining--;tick();if(remaining<=0){clearInterval(timer);document.getElementById("timerLabel").textContent="휴식 완료"}},1000)} function addTime(s){remaining+=s;tick()} function stopTimer(){clearInterval(timer);remaining=0;timerLabel="";tick();document.getElementById("timerLabel").textContent="대기"} function tick(){document.getElementById("clock").textContent=fmt(Math.max(0,remaining));document.getElementById("timerLabel").textContent=timerLabel||"대기"} function fmt(s){return `${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`}
+function saveConfig(){localStorage.setItem("physique-config",JSON.stringify(cfg))}
+function renderProgress(){let targets={};Object.values(cfg.routines).flat().forEach(e=>targets[e.role]=(targets[e.role]||0)+e.sets);let h=`<div class="card"><div class="name">주간 프로그램 볼륨</div><div class="meta">현재 루틴 기준 직접 세트</div>`;Object.entries(targets).sort((a,b)=>b[1]-a[1]).forEach(([k,v])=>h+=`<div style="margin-top:10px"><div class="row"><b>${k}</b><span>${v}세트</span></div><div class="progress"><div class="bar" style="width:${Math.min(100,v/15*100)}%"></div></div></div>`);document.getElementById("progressBody").innerHTML=h+"</div>"}
+function renderProgram(){let h=`<div class="meta">버전 ${cfg.version||"-"}</div><p>${(cfg.focus||[]).map(x=>`<span class="badge">${x}</span>`).join("")}</p>`;Object.entries(cfg.routines).forEach(([d,es])=>{h+=`<p><b>${d}</b><br>${es.map(e=>`${e.name} ${(e.type==="cardio"||e.role==="유산소")?e.reps:`${e.sets}×${e.reps} · ${fmt(e.rest)}`}`).join("<br>")}</p>`});document.getElementById("programBody").innerHTML=h}
+function exportConfig(){let s=JSON.stringify(cfg,null,2);navigator.clipboard?.writeText(s);prompt("아래 설정을 복사해 ChatGPT에 붙여넣을 수 있습니다.",s)}
+function showExerciseDb(){
+ let box=document.getElementById("exerciseDbView"),u=userExerciseDb(),all={...BUILTIN_EXERCISE_DB,...u};
+ let names=Object.keys(all).sort((a,b)=>a.localeCompare(b,"ko"));
+ box.innerHTML=`<div><b>${names.length}개 운동 등록</b> · 사용자 추가 ${Object.keys(u).length}개</div>`+
+ names.map(n=>{let p=all[n],isUser=!!u[n];return `<div style="display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid #333"><span>${n}<br><small>${p.muscles.join(" · ")}</small></span>${isUser?`<span><button class="small" onclick='editExerciseDb(${JSON.stringify(n)})'>수정</button><button class="small" onclick='deleteExerciseDb(${JSON.stringify(n)})'>삭제</button></span>`:""}</div>`}).join("")
+}
+function editExerciseDb(n){
+ let db=userExerciseDb(),p=db[n];if(!p)return;
+ let v=prompt("주동근을 입력하세요 (예: 가슴, 등, 어깨, 이두, 삼두, 대퇴사두, 햄스트링, 둔근, 종아리)",p.primary);if(!v)return;
+ p.primary=v.trim();p.muscles=[p.primary];db[n]=p;saveUserExerciseDb(db);showExerciseDb()
+}
+function deleteExerciseDb(n){let db=userExerciseDb();delete db[n];saveUserExerciseDb(db);showExerciseDb()}
+function showAltDb(){
+ let box=document.getElementById("altDbView"),db=getAltDb(),roles=Object.keys(db).filter(r=>(db[r]||[]).length);
+ if(!roles.length){box.innerHTML="저장된 사용자 대체운동이 없습니다.";return}
+ box.innerHTML=roles.map(r=>`<div style="margin:8px 0"><b>${r}</b><br>${db[r].map(n=>`<span style="display:inline-flex;align-items:center;gap:2px;margin:2px"><span>${n}</span><button class="small" onclick='removeFromAltDb(${JSON.stringify(r)},${JSON.stringify(n)});showAltDb()'>삭제</button></span>`).join("")}</div>`).join("")
+}
+function loadJsonFile(ev){
+ let f=ev.target.files?.[0]; if(!f)return;
+ let info=document.getElementById("fileInfo"),msg=document.getElementById("importMsg");
+ if(!f.name.toLowerCase().endsWith(".json")){info.textContent="JSON 파일만 선택할 수 있습니다.";ev.target.value="";return}
+ let r=new FileReader();
+ r.onload=()=>{document.getElementById("importBox").value=String(r.result||"");info.textContent=`선택됨: ${f.name} · ${(f.size/1024).toFixed(1)} KB`;try{let x=JSON.parse(r.result);msg.textContent=x.routines?`읽기 완료 · 버전 ${x.version||"미표기"} · 적용 버튼을 눌러주세요.`:"루틴(routines) 항목이 없는 파일입니다."}catch{msg.textContent="JSON 형식을 읽을 수 없습니다."}};
+ r.onerror=()=>{msg.textContent="파일을 읽는 중 오류가 발생했습니다."};
+ r.readAsText(f,"utf-8")
+}
+function importConfig(){try{let n=JSON.parse(document.getElementById("importBox").value);if(!n.routines)throw Error();cfg=n;saveConfig();document.getElementById("importMsg").textContent=`업데이트 적용 완료 · ${n.version||"버전 미표기"}`;renderWorkout();renderProgram()}catch{document.getElementById("importMsg").textContent="형식이 올바르지 않습니다."}}
+function resetConfig(){if(confirm("루틴 설정을 기본값으로 복원할까요? 운동 기록은 삭제하지 않습니다.")){cfg=structuredClone(DEFAULT);saveConfig();renderWorkout();renderProgram()}}
+page("work");renderWorkout();tick();
+</script><script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(console.error);
+  });
+}
+</script>
+</body></html>
