@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111827"><title>Physique v6.4</title>
+<meta name="theme-color" content="#121714"><title>Physique v8.2 · Forest Performance</title>
 <style>
 :root{--bg:#f5f6f8;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--good:#166534;--blue:#1d4ed8}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
@@ -18,8 +18,25 @@ input,select,textarea{width:100%;border:1px solid var(--line);border-radius:10px
 .timer{position:fixed;bottom:0;left:0;right:0;background:#111827;color:#fff;padding:10px 14px calc(10px + env(safe-area-inset-bottom));z-index:5}.timerin{max-width:760px;margin:auto;display:flex;gap:10px;align-items:center}.clock{font-size:27px;font-weight:900;min-width:88px}.timer button{background:#374151;color:white;padding:8px}
 .badge{display:inline-block;background:#f3f4f6;border-radius:999px;padding:5px 8px;font-size:11px;margin:3px}.rec{margin-top:8px;padding:9px 10px;background:#f9fafb;border-radius:11px;font-size:12px;line-height:1.45}.rec b{font-size:13px}.condition{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:8px}.condition button{padding:8px 3px;font-size:11px}.seed{font-size:11px;color:#6b7280;margin-top:5px}.progress{height:9px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin-top:5px}.bar{height:100%;background:#111827}
 pre{white-space:pre-wrap;font-size:11px;background:#f9fafb;padding:10px;border-radius:10px;max-height:220px;overflow:auto}
+
+/* v8.2 Forest Performance — visual layer, preserving legacy DOM IDs and storage */
+:root{color-scheme:dark;--bg:#121714;--card:#222c26;--ink:#f0f3ed;--muted:#aab7aa;--line:#3a493e;--good:#a1d2a4;--blue:#a1d2a4}
+html{background:var(--bg)}body{background:var(--bg);color:var(--ink);line-height:1.5}
+.app{max-width:780px;padding:16px 14px 165px}.top{position:relative;background:transparent;backdrop-filter:none;padding:8px 0 14px}.top h1{letter-spacing:-.8px;font-size:27px}.top>.row{align-items:flex-start}.top .muted{color:var(--muted)}
+.nav{position:fixed;z-index:9;bottom:0;left:0;right:0;margin:0;padding:9px max(12px,env(safe-area-inset-left)) calc(11px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-right));background:#19221c;border-top:1px solid var(--line);grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}
+.nav button{border-radius:12px;background:transparent;color:var(--muted);font-size:11px;padding:7px 1px;min-height:50px;font-weight:650;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}.nav button .navicon{font-size:20px;line-height:1.2}.nav button.active{background:#304337;color:#c7ebc8}
+.card{background:var(--card);border:1px solid var(--line);box-shadow:none;border-radius:16px;padding:16px;margin:12px 0}.name{font-size:17px;letter-spacing:-.25px}.muted,.meta{color:var(--muted)}
+button{background:#334238;color:var(--ink);border:1px solid #435447;min-height:42px;border-radius:11px}button.active,.primary{background:#a1d2a4;color:#152018;border-color:#a1d2a4}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #a1d2a4;outline-offset:2px}
+input,select,textarea{background:#18221c;color:var(--ink);border-color:#47584b;min-height:43px;min-width:0}input[type=checkbox]{min-height:auto;width:auto;accent-color:#a1d2a4}input::placeholder,textarea::placeholder{color:#87988b}
+.rec,pre{background:#1a251e;color:#dce8d9;border:1px solid #33483a}.badge{background:#314335;color:#c8e6c6}.done{background:#3b6446!important;color:#f0fff0!important;border-color:#80b48a!important}.progress{background:#3a463c}.bar{background:#a1d2a4}.head{color:#c2d0c0;font-size:11px}
+.days{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.days button{padding:8px 3px;font-size:12px}.condition{grid-template-columns:repeat(5,minmax(0,1fr))}.condition button{font-size:10px;min-height:45px}
+.grid{grid-template-columns:30px minmax(0,1fr) minmax(0,1fr) minmax(0,1.18fr) 42px;gap:4px}.grid input,.grid select{padding:8px 4px;font-size:14px;text-align:center}.grid button{min-height:43px;padding:6px 1px}.grid[style*="grid-template-columns:32px 1fr 1fr 1fr 1fr 1.1fr 42px"]{grid-template-columns:26px repeat(4,minmax(0,1fr)) minmax(0,1.1fr) 35px!important}.grid[style*="grid-template-columns:32px 1fr 1fr 1fr 1fr 1.1fr 42px"] input{font-size:12px;padding:7px 2px}
+.timer{bottom:calc(70px + env(safe-area-inset-bottom));background:#233229;border-top:1px solid #425a48;padding:6px 12px;z-index:8}.timerin{gap:7px}.clock{font-size:22px;min-width:75px}.timer button{min-height:37px;background:#3a5141}.timerLabel{font-size:11px}
+.fp-kicker{color:#a1d2a4;letter-spacing:1.6px;font-size:11px;font-weight:800}.fp-hero{padding:22px;background:linear-gradient(135deg,#2c4332,#1b2920);border:1px solid #506a52;border-radius:20px;margin:12px 0}.fp-hero h2{margin:8px 0 4px;font-size:27px}.fp-hero p{color:#c5d5c3;margin:4px 0 15px}.fp-hero button{width:100%;background:#a1d2a4;color:#142018;font-size:16px}.fp-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fp-stats .card{margin:0}.fp-number{font-size:24px;font-weight:850}.fp-section{font-size:21px;margin:18px 0 8px}.fp-tabs{display:flex;gap:6px;margin:10px 0}.fp-tabs button{flex:1;font-size:12px;padding:7px 2px}.fp-group-title{font-size:13px;color:#a1d2a4;letter-spacing:.4px;margin:22px 0 4px;font-weight:800}.fp-collapse{margin:9px 0}.fp-collapse summary{cursor:pointer;color:#cce2c8;font-size:13px;font-weight:750;padding:8px 0}.fp-collapse .rec{margin:5px 0}.fp-hidden{display:none!important}
+@media(max-width:420px){.app{padding-left:10px;padding-right:10px}.card{padding:12px}.row{gap:5px}.small{font-size:11px;padding:6px}.grid input,.grid select{font-size:12px}.top h1{font-size:25px}}
+@media(min-width:600px){.nav{left:50%;transform:translateX(-50%);max-width:780px;border-left:1px solid var(--line);border-right:1px solid var(--line)}}
 </style><link rel="manifest" href="./manifest.webmanifest">
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#121714">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -27,9 +44,9 @@ pre{white-space:pre-wrap;font-size:11px;background:#f9fafb;padding:10px;border-r
 <link rel="apple-touch-icon" href="./icon-192.png">
 </head>
 <body><div class="app">
-<div class="top"><div class="row"><div><h1>Physique <span class="muted">v7.0</span></h1><div class="muted">4 Day Program · adaptive workout log</div></div><button class="small" onclick="exportConfig()">루틴 내보내기</button></div>
-<div class="nav"><button id="n-work" onclick="page('work')">오늘 운동</button><button id="n-progress" onclick="page('progress');setTimeout(renderHistory,0)">성장</button><button id="n-plan" onclick="page('plan')">일정·분석</button><button id="n-program" onclick="page('program')">설정</button></div></div>
-<section id="work" class="panel"><div class="days" id="days"></div><div id="workout"></div><button class="primary" style="width:100%;padding:14px" onclick="finishWorkout()">오늘 운동 완료</button></section>
+<div class="top"><div class="row"><div><h1>Physique <span class="muted">v8.2</span></h1><div class="muted">4 Day Program · adaptive workout log</div></div><button class="small" onclick="exportConfig()">루틴 내보내기</button></div>
+</div><div class="nav"><button id="n-home" onclick="page('home')"><span class="navicon">⌂</span>홈</button><button id="n-work" onclick="page('work')"><span class="navicon">▣</span>운동</button><button id="n-schedule" onclick="page('schedule')"><span class="navicon">▦</span>일정</button><button id="n-growth" onclick="page('growth')"><span class="navicon">↗</span>성장</button><button id="n-program" onclick="page('program')"><span class="navicon">⚙</span>설정</button></div>
+<section id="home" class="panel"><div class="fp-kicker">FOREST PERFORMANCE / DAILY</div><h2 class="fp-section">오늘의 운동</h2><div class="fp-hero"><div class="fp-kicker">NEXT SESSION</div><h2 id="fpNextRoutine">등</h2><p id="fpHomeLocation">운동 장소</p><button onclick="fpStartWorkout()">운동 시작 →</button></div><div class="fp-stats"><div class="card"><div class="meta">이번 주 완료</div><div class="fp-number" id="fpWeekSessions">0회</div></div><div class="card"><div class="meta">성장 우선순위</div><div class="fp-number" style="font-size:19px">측면 어깨</div><div class="meta">등 · 상부 가슴</div></div></div><div class="card"><div class="name">오늘의 코칭</div><div class="rec" id="fpHomeCoach">운동 기록과 회복 상태를 기반으로 추천을 확인하세요.</div><button class="small" onclick="page('growth')">성장 분석 보기 →</button></div><div class="card"><div class="name">다음 루틴 종목</div><div id="fpNextExercises"></div></div></section><section id="schedule" class="panel"><h2 class="fp-section">일정 · 운동 이력</h2><div class="fp-tabs"><button id="fp-s-sequence" onclick="fpScheduleTab('sequence')">루틴 순서</button><button id="fp-s-history" onclick="fpScheduleTab('history')">운동 이력</button><button id="fp-s-readiness" onclick="fpScheduleTab('readiness')">컨디션</button></div><div id="fpScheduleSequence"></div><div id="fpScheduleHistory"></div><div id="fpScheduleReadiness"></div></section><section id="growth" class="panel"><h2 class="fp-section">성장 분석</h2><div id="fpGrowthContents"></div></section><section id="work" class="panel"><div class="days" id="days"></div><div id="workout"></div><button class="primary" style="width:100%;padding:14px" onclick="finishWorkout()">오늘 운동 완료</button></section>
 <section id="progress" class="panel"><div id="progressBody"></div><div class="card"><div class="name">운동 수행 기록</div><div class="meta">완료한 세션을 날짜별로 확인합니다.</div></div><div id="historyBody"></div><div id="historyModal"></div>
 <div class="card" id="bodyCompCard">
  <div class="name">인바디 · 체성분 추이</div>
@@ -52,11 +69,11 @@ pre{white-space:pre-wrap;font-size:11px;background:#f9fafb;padding:10px;border-r
 <section id="plan" class="panel">
 <div class="card"><div class="name">순서형 운동 스케줄</div><div class="meta">쉬거나 건너뛰어도 다음 운동 순서는 유지됩니다. 아파트 루틴은 같은 부위의 대체 버전입니다.</div><div id="v7Schedule"></div></div>
 <div class="card"><div class="name">오늘 컨디션 · 운동량 가이드</div><label>수면시간 <input type="number" id="v7Sleep" min="0" max="16" step="0.5" placeholder="예: 7.5"></label><label> 피로도 <select id="v7Fatigue"><option value="2">보통</option><option value="1">상쾌함</option><option value="3">약간 피곤함</option><option value="4">피곤함</option><option value="5">매우 피곤함</option></select></label><label style="display:block;margin-top:8px"><input type="checkbox" id="v7Pain"> 관절 통증 있음</label><button class="primary" onclick="v7SaveCondition()">컨디션 저장</button><div id="v7ConditionAdvice" class="rec"></div></div>
-<div class="card"><div class="name">주간 근육별 운동량</div><div class="meta">완료 본세트만 집계 · 직접 세트와 가중 환산 세트는 서로 다른 지표입니다.</div><label>주차 <select id="v7Week" onchange="v7RenderVolume()"><option value="0">이번 주</option><option value="1">지난주</option><option value="2">2주 전</option><option value="3">3주 전</option></select></label><div id="v7Volume"></div></div>
-<div class="card"><div class="name">운동별 성장 그래프</div><select id="v7Exercise" onchange="v7RenderGraph()"></select><select id="v7Metric" onchange="v7RenderGraph()"><option value="top">최고 중량</option><option value="volume">총 볼륨</option><option value="reps">최고 반복수</option><option value="e1rm">추정 1RM (참고)</option></select><div id="v7Graph"></div></div>
+<div class="card"><div class="name">주간 근육별 운동량</div><div class="meta">완료 본세트만 집계 · 직접 세트와 가중 환산 세트는 서로 다른 지표입니다.</div><label>주차 <select id="v7Week" onchange="v7RenderVolume()"><option value="0">이번 주</option><option value="1">지난주</option><option value="2">2주 전</option><option value="3">3주 전</option></select></label><div id="v7Volume"></div><div class="row" style="margin-top:10px"><button class="small" onclick="v73RenderTrends()">최근 4주 추세 새로고침</button></div><div id="v73Trends"></div><div class="meta" style="margin-top:8px">근육별 주간 목표는 사용자 설정값이며 의학적 권장량이 아닙니다.</div><div id="v73Targets"></div></div>
+<div class="card"><div class="name">적응형 코칭 · Volume Coach</div><div class="meta">측면 어깨·등·상부 가슴 성장 우선. 완료 기록 3~5회, 회복·통증 및 근육별 직접 세트를 함께 확인합니다. 추천은 승인 전까지 루틴을 바꾸지 않습니다.</div><div id="v80Coach"></div></div><div class="card"><div class="name">운동별 성장 그래프</div><label>장소별 비교 <select id="v811GraphScope" onchange="v7RenderGraph()"><option value="current">현재 장소</option><option value="all">모든 장소 (참고)</option></select></label><select id="v7Exercise" onchange="v7RenderGraph()"></select><select id="v7Metric" onchange="v7RenderGraph()"><option value="top">최고 중량</option><option value="volume">총 볼륨</option><option value="reps">최고 반복수</option><option value="e1rm">추정 1RM (참고)</option></select><label>표시 기록 <select id="v73GraphRange" onchange="v7RenderGraph()"><option value="5">최근 5회</option><option value="10" selected>최근 10회</option><option value="0">전체</option></select></label><div id="v7Graph"></div><div id="v73PB"></div><div id="v73Plateau"></div></div>
 </section>
 <section id="program" class="panel"><div class="card"><div class="name">통합 JSON 백업 · 복원</div><div class="meta">운동 이력, 루틴, 인바디, 대체 운동 DB, 메모, 설정을 포함한 Physique 로컬 데이터를 백업합니다. 업데이트 전에 반드시 백업하세요.</div><button class="primary" onclick="v7ExportBackup()">전체 백업 다운로드</button><input id="v7RestoreFile" type="file" accept=".json,application/json" onchange="v7PreviewBackup(event)" style="margin-top:12px"><div id="v7BackupPreview" class="meta"></div><button onclick="v7RestoreBackup()">검증 후 전체 복원</button></div>
-<div class="card"><div class="name">Exercise DB</div><p class="meta">운동 자체의 부위 정보를 관리합니다. 기본 DB는 이번에 전달한 전체 운동 리스트를 기반으로 등록되어 있습니다. 새 운동은 자동 학습되며 사용자 추가 항목은 수정/삭제할 수 있습니다.</p><button onclick="showExerciseDb()">운동 DB 보기</button><div id="exerciseDbView" class="meta" style="margin-top:8px;max-height:320px;overflow:auto"></div></div><div class="card"><div class="name">학습된 대체운동 DB</div><p class="meta">직접 입력하거나 운동을 서로 대체하면 같은 역할의 대체운동으로 자동 저장됩니다. 대체 메뉴의 × 버튼으로 개별 삭제할 수 있습니다.</p><button onclick="showAltDb()">DB 보기 / 관리</button><div id="altDbView" class="meta" style="margin-top:8px"></div></div><div class="card"><div class="name">ChatGPT 루틴 업데이트</div><p class="meta">ChatGPT에서 받은 JSON 파일을 선택하면 내용을 확인한 뒤 앱 루틴을 업데이트할 수 있습니다. 운동 기록은 유지됩니다.</p>
+<div class="card"><div class="name">장소 프리셋 관리</div><div class="meta">장소 추가·이름 변경·보관은 이 설정 화면에서만 가능합니다. 보관된 장소의 과거 기록은 보존됩니다.</div><div id="v81Places"></div><button class="small" onclick="v81AddPlace()">＋ 장소 추가</button></div><div class="card"><div class="name">운동 프리셋 · 장소별 기록 분리</div><div class="meta">운동마다 장소 구분 ON/OFF를 선택하세요. OFF는 장소 통합, ON은 장소별 추천·중량·반복수를 분리합니다.</div><div id="v81Exercises"></div></div><div class="card"><div class="name">Exercise DB</div><p class="meta">운동 자체의 부위 정보를 관리합니다. 기본 DB는 이번에 전달한 전체 운동 리스트를 기반으로 등록되어 있습니다. 새 운동은 자동 학습되며 사용자 추가 항목은 수정/삭제할 수 있습니다.</p><button onclick="showExerciseDb()">운동 DB 보기</button><div id="exerciseDbView" class="meta" style="margin-top:8px;max-height:320px;overflow:auto"></div></div><div class="card"><div class="name">학습된 대체운동 DB</div><p class="meta">직접 입력하거나 운동을 서로 대체하면 같은 역할의 대체운동으로 자동 저장됩니다. 대체 메뉴의 × 버튼으로 개별 삭제할 수 있습니다.</p><button onclick="showAltDb()">DB 보기 / 관리</button><div id="altDbView" class="meta" style="margin-top:8px"></div></div><div class="card"><div class="name">ChatGPT 루틴 업데이트</div><p class="meta">ChatGPT에서 받은 JSON 파일을 선택하면 내용을 확인한 뒤 앱 루틴을 업데이트할 수 있습니다. 운동 기록은 유지됩니다.</p>
 <input id="jsonFile" type="file" accept=".json,application/json" onchange="loadJsonFile(event)" style="margin-top:8px">
 <div id="fileInfo" class="meta" style="margin-top:7px">선택된 파일 없음</div>
 <textarea id="importBox" rows="7" placeholder='JSON 파일을 선택하면 여기에 내용이 표시됩니다. 직접 붙여넣기도 가능합니다.' style="margin-top:8px"></textarea>
@@ -135,6 +152,83 @@ routines:{
 
 let cfg=JSON.parse(localStorage.getItem("physique-config")||"null")||structuredClone(DEFAULT);
 Object.keys(DEFAULT.routines).forEach(k=>{if(!cfg.routines[k])cfg.routines[k]=structuredClone(DEFAULT.routines[k])});
+// v8.0: temporary replacements live in their own localStorage key, never in saved routines.
+const V75_KEY='physique-v75-temporary';
+function v75Date(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function v75Read(){try{const a=JSON.parse(localStorage.getItem(V75_KEY)||'{}');return a&&typeof a==='object'?a:{}}catch{return {}}}
+function v75Write(a){localStorage.setItem(V75_KEY,JSON.stringify(a))}
+function v75Key(d,i){return d+'|'+i}
+function v75ApplySaved(){const a=v75Read(),today=v75Date();let dirty=false;for(const [key,v] of Object.entries(a)){
+ if(!v||v.date!==today){delete a[key];dirty=true;continue}
+ const [d,iText]=key.split('|'),i=Number(iText),ex=cfg.routines[d]?.[i];
+ if(!ex||ex.name!==v.original.name){delete a[key];dirty=true;continue}
+ cfg.routines[d][i]={...ex,name:v.name,variants:undefined,exerciseDbName:v.name};
+ }if(dirty)v75Write(a)}
+function v75OriginalConfig(){const clone=structuredClone(cfg),a=v75Read();for(const [key,v] of Object.entries(a)){
+ const [d,iText]=key.split('|'),i=Number(iText);
+ if(clone.routines[d]?.[i]&&v?.original)clone.routines[d][i]=structuredClone(v.original);
+ }return clone}
+function v75RestoreDay(d){let a=v75Read(),changed=false;for(const [key,v] of Object.entries(a)){
+ const [routine,index]=key.split('|');if(routine!==d)continue;
+ if(cfg.routines[routine]?.[Number(index)])cfg.routines[routine][Number(index)]=structuredClone(v.original);
+ delete a[key];changed=true;
+ }if(changed)v75Write(a)}
+function v75Swap(i,n,mode,reason){const old=cfg.routines[day][i],key=v75Key(day,i),a=v75Read();if(!old||!n||old.name===n)return;
+ let p=exerciseProfile(n),slot=normalizeRole(old.role);
+ if(p&&p.primary!==slot&&!(p.muscles||[]).includes(slot)&&!confirm(`⚠️ ${n}의 운동 부위가 현재 슬롯과 다릅니다. 계속할까요?`))return;
+ if(!p)learnUnknownExercise(n,old.role);
+ if(mode==='today'){
+  // The current slot is overlaid only for today's session; all original routine settings are preserved.
+  const original=a[key]?.original||structuredClone(old);
+  a[key]={date:v75Date(),original,name:n,reason:reason||'개인 선호'};v75Write(a);
+  cfg.routines[day][i]={...old,name:n,variants:undefined,exerciseDbName:n};
+ }else{
+  delete a[key];v75Write(a);
+  addToAltDb(old.role,old.name);addToAltDb(old.role,n);
+  cfg.routines[day][i]={...old,name:n,variants:undefined,exerciseDbName:n};saveConfig();
+ }
+ addToAltDb(old.role,n);
+ const log=v7Get();(log.events??=[]).push({type:'alternative',scope:mode,date:new Date().toISOString(),day,from:old.name,to:n,reason:reason||'개인 선호'});v7Save(log);
+ renderWorkout();
+}
+function v75ChooseAlternative(i,n){const mode=confirm('오늘만 대체할까요?\n확인: 오늘만 (기본 루틴 유지)\n취소: 기본 루틴 변경 여부 선택')?'today':(confirm('기본 루틴을 영구 변경할까요?\n취소하면 변경하지 않습니다.')?'default':null);if(!mode)return;
+ const reason=prompt('대체 사유: 장비 없음 / 자리 없음 / 통증 / 개인 선호','자리 없음');if(reason===null)return;
+ if(!['장비 없음','자리 없음','통증','개인 선호'].includes(reason)){alert('제시된 사유 중 하나를 입력해 주세요.');return}
+ v75Swap(i,n,mode,reason);
+}
+function v75Recalculate(i){
+ const ex=cfg.routines[day][i];if(!ex||ex.type==='cardio'||ex.type==='superset')return;
+ const name=recordName(day,ex),count=effectiveSets(i),old=v72GetPlan(day,ex,name,count);
+ let completed=[],pending=[];
+ for(let j=0;j<count;j++){
+  const done=document.getElementById(`c-${i}-${j}`)?.classList.contains('done');
+  const w=Number(document.getElementById(`w-${i}-${j}`)?.value),r=Number(document.getElementById(`r-${i}-${j}`)?.value);
+  if(done&&w>0&&r>0)completed.push({w,r,j});else if(!done)pending.push(j);
+ }
+ if(!pending.length){alert('남은 미완료 세트가 없습니다.');return}
+ const base=completed.at(-1),next=structuredClone(old);
+ const range=String(ex.reps||'8-12').match(/(\d+)\s*[–~-]\s*(\d+)/);
+ const low=range?Number(range[1]):1,high=range?Number(range[2]):30;
+ pending.forEach((j,k)=>{
+  const prior=next.targets[j]||{w:'',r:String(low)};
+  if(base){
+   // Only remaining sets are adjusted; actual completed sets never change.
+   const planned=Number(prior.r)||low;
+   const completedTarget=Number(old.targets[base.j]?.r)||base.r;
+   const diff=base.r-completedTarget;
+   const suggested=Math.max(low,Math.min(high,planned+(diff>=2?1:diff<=-2?-1:0)));
+   next.targets[j]={...prior,w:String(base.w),r:String(suggested)};
+  }
+ });
+ next.source=base?'오늘 완료 세트 반영':'직전 기록 기반 재계산';next.generatedAt=new Date().toISOString();
+ localStorage.setItem(v72PlanKey(day,name),JSON.stringify(next));
+ if(confirm('추천을 다시 계산했습니다. 미완료 세트 입력칸에도 적용할까요?\n취소하면 추천만 갱신됩니다.')){
+  pending.forEach(j=>{const t=next.targets[j];const w=document.getElementById(`w-${i}-${j}`),r=document.getElementById(`r-${i}-${j}`);if(w&&r){w.value=t.w||'';r.value=t.r}});
+  saveDraft(i);
+ }
+ renderWorkout();
+}
+v75ApplySaved();
 const SEEDS={
 "등":{
 "와이드 머신 랫풀다운":{w:"50",r:"12",note:"Fleek 2026-10-06: 50kg × 12 × 4"},
@@ -167,13 +261,34 @@ const CONDITIONS=[
 
 let day=localStorage.getItem("physique-day")||"등",remaining=0,timer=null,timerLabel="";
 const effortOptions=`<option value="">느낌</option><option value="easy">🟢 여유</option><option value="good">🔵 적당</option><option value="hard">🟠 빡셈</option><option value="limit">🔴 한계</option>`;
-function page(p){document.querySelectorAll(".panel").forEach(x=>x.classList.remove("show"));document.getElementById(p).classList.add("show");document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));document.getElementById("n-"+p).classList.add("active");if(p==="progress")renderProgress();if(p==="program")renderProgram();if(p==="plan")v7RenderPlan()}
+function page(p){document.querySelectorAll(".panel").forEach(x=>x.classList.remove("show"));document.getElementById(p).classList.add("show");document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));document.getElementById("n-"+p).classList.add("active");if(p==="progress")renderProgress();if(p==="program"){renderProgram();v81RenderSettings()};if(p==="plan")v7RenderPlan()}
 function variantKey(d,n){return `physique-variant:${d}:${n}`}
 function selectedVariant(d,ex){return ex.variants?(localStorage.getItem(variantKey(d,ex.name))||ex.variants[0]):ex.name}
 function setVariant(i,v){let ex=cfg.routines[day][i];localStorage.setItem(variantKey(day,ex.name),v);renderWorkout()}
 function recordName(d,ex){return selectedVariant(d,ex)}
-function logKey(d,n){return "physique-log:"+d+":"+n} function draftKey(d,n){return "physique-draft:"+d+":"+n}
+function logKey(d,n){return "physique-log:"+d+":"+n+v81Suffix(n)} function draftKey(d,n){return "physique-draft:"+d+":"+n+v81Suffix(n)}
 function lastLog(d,n){try{return JSON.parse(localStorage.getItem(logKey(d,n))||"null")}catch{return null}}
+// v7.1: Use existing unsent set inputs as a provisional starting point.
+// A draft is NOT a completed workout, and never enters progress history.
+function v71InitialBaseline(d, ex, chosen, draft){
+ const valid = x => x && Array.isArray(x.sets) && x.sets.some(s =>
+   Number(s.w)>0 && Number(s.r)>0);
+ const first = x => x.sets.find(s => Number(s.w)>0 && Number(s.r)>0);
+ if(valid(draft))return {source:'현재 입력 중인 기록', data:draft, set:first(draft), current:true};
+ // An old draft under another variant is intentionally not reused: machine loads differ.
+ // Prior saved last-log data is allowed only for this exact exercise name.
+ const legacy=lastLog(d,chosen);
+ if(valid(legacy))return {source:'기존 운동 입력 기록', data:legacy, set:first(legacy), current:false};
+ const seed=SEEDS?.[d]?.[ex.name];
+ if(seed && Number(seed.w)>0 && Number(seed.r)>0)
+   return {source:'기본 초기값', data:null, set:{w:seed.w,r:seed.r}, current:false};
+ return null;
+}
+function v71BaselineText(b){
+ if(!b)return '';
+ const w=Number(b.set.w),r=Number(b.set.r);
+ return `<div class="rec"><b>첫 운동 기준 · ${b.source}</b><br>${w}kg × ${r}회부터 시작해 실제 수행에 맞게 수정하세요. 완료 세션 기록이 없으므로 자동 증량은 보류됩니다.</div>`;
+}
 function renderDays(){let el=document.getElementById("days");el.innerHTML="";Object.keys(cfg.routines).forEach(d=>{let b=document.createElement("button");b.textContent=d;b.className=d===day?"active":"";b.onclick=()=>{day=d;localStorage.setItem("physique-day",d);renderWorkout()};el.appendChild(b)})}
 function conditionKey(){return `physique-condition:${day}:${new Date().toISOString().slice(0,10)}`}
 function getCondition(){return localStorage.getItem(conditionKey())||"normal"}
@@ -217,18 +332,80 @@ function recommendation(ex,last){
  let total=reps.reduce((a,b)=>a+b,0);
  return adjustedRecommendation(ex,last,{title:"현재 중량 유지 →",body:`지난번 총 ${total}회. 같은 중량에서 총 반복수 +1~2회 또는 같은 반복수에서 더 여유로운 강도를 목표로.${mostlyGood?" 현재 강도는 적절한 편입니다.":""}`});
 }
+// v7.3: Plans are suggestions; actual set entries remain editable and authoritative.
+function v72PlanKey(d,n){return 'physique-plan:'+d+':'+n+v81Suffix(n)}
+function v72ValidSet(s){return !!(s&&s.done===true&&Number(s.w)>0&&Number(s.r)>0)}
+function v72LastCompleted(d,n){
+ for(const session of getHistory()){
+  const item=(session.exercises||[]).find(e=>e.name===n&&e.type!=='cardio'&&e.type!=='superset'&&v81SessionMatches(e,session,n));
+  if(item&&v81SessionMatches(item,session,n)){const sets=(item.data?.sets||[]).filter(v72ValidSet);if(sets.length)return {sets,date:session.date,source:'완료 세션'};}
+ }
+ const legacy=lastLog(d,n);
+ if(legacy&&Array.isArray(legacy.sets)){
+  const sets=legacy.sets.filter(v72ValidSet);
+  if(sets.length)return {sets,date:legacy.date||'',source:'이전 완료 기록'};
+ }
+ return null;
+}
+function v72MakePlan(d,ex,name,count){
+ const [low,high]=parseRange(ex.reps),min=Math.max(1,low),max=Math.max(min,Math.min(high,50));
+ const prior=v72LastCompleted(d,name),draft=JSON.parse(localStorage.getItem(draftKey(d,name))||'null');
+ const baseline=prior?null:v71InitialBaseline(d,ex,name,draft);
+ const source=prior?.sets||baseline?.data?.sets||[];
+ const fallback=baseline?.set||source.find(s=>s&&Number(s.w)>0&&Number(s.r)>0)||null;
+ const lastWorking=prior?source.filter(v72ValidSet):[];
+ const topReached=lastWorking.length>=count&&lastWorking.slice(0,count).every(s=>Number(s.r)>=max&&['easy','good'].includes(s.e))&&!v7HasRecentPain(name)&&!v7RecoveryRestricted()&&!/하체|레그|스쿼트|데드리프트|런지/i.test(d+' '+name);
+ const targets=[];
+ for(let j=0;j<count;j++){
+  const old=source[j]||source[source.length-1]||fallback;
+  const weight=Number(old?.w)||Number(fallback?.w)||0;
+  const reps=Number(old?.r)||Number(fallback?.r)||min;
+  let targetReps=Math.min(max,Math.max(min,reps+(prior&&reps<max?1:0)));
+  // No automatic load increases: a suggestion is shown only after every set reaches the upper bound.
+  targets.push({w:weight?String(weight):'',r:String(targetReps),previous:old?`${old.w||'-'}kg × ${old.r||'-'}회`:null});
+ }
+ return {targets,source:prior?.source||baseline?.source||'첫 운동',priorDate:prior?.date||'',eligibleIncrease:topReached,generatedAt:new Date().toISOString()};
+}
+function v72GetPlan(d,ex,name,count){
+ let plan=null;try{plan=JSON.parse(localStorage.getItem(v72PlanKey(d,name))||'null')}catch{}
+ if(!plan||!Array.isArray(plan.targets)||plan.targets.length!==count){plan=v72MakePlan(d,ex,name,count);localStorage.setItem(v72PlanKey(d,name),JSON.stringify(plan));}
+ return plan;
+}
+function v72Apply(i){
+ const ex=cfg.routines[day][i],name=recordName(day,ex),count=effectiveSets(i),plan=v72GetPlan(day,ex,name,count);
+ if(!plan.targets.some(x=>x.w)){alert('추천 중량 기록이 없습니다. 실제 중량을 직접 입력해 주세요.');return}
+ let hasDone=false,hasValues=false;
+ for(let j=0;j<count;j++){
+  if(document.getElementById(`c-${i}-${j}`)?.classList.contains('done'))hasDone=true;
+  if(document.getElementById(`w-${i}-${j}`)?.value||document.getElementById(`r-${i}-${j}`)?.value)hasValues=true;
+ }
+ if(hasDone){alert('완료된 세트가 있어 추천값 일괄 적용을 중단했습니다. 미완료 세트는 직접 수정할 수 있습니다.');return}
+ if(hasValues&&!confirm('현재 입력된 미완료 세트 값을 추천 목표로 교체할까요?'))return;
+ for(let j=0;j<count;j++){
+  const t=plan.targets[j];document.getElementById(`w-${i}-${j}`).value=t.w;
+  document.getElementById(`r-${i}-${j}`).value=t.r;
+ }
+ saveDraft(i);
+}
+function v72PlanMarkup(i,plan){
+ const rows=plan.targets.map((t,j)=>`<div class="meta">${j+1}세트 · 목표 <b>${t.w||'직접 입력'}kg × ${t.r}회</b>${t.previous?` · 직전 ${t.previous}`:''}</div>`).join('');
+ return `<div class="rec" style="margin-top:8px"><b>오늘의 세트별 추천 · ${plan.source}</b>${rows}${plan.eligibleIncrease?'<div class="meta">지난번 모든 세트 상한 달성: 최소 증량을 검토할 수 있어요. 자동 증량은 하지 않습니다.</div>':''}<div class="meta">추천보다 더 많이 수행해도 됩니다. 실제 KG·횟수를 수정하면 그 값으로 저장됩니다.</div><button class="small" onclick="v72Apply(${i})">추천값 일괄 적용</button> <button class="small" onclick="v75Recalculate(${i})">남은 세트 추천 다시 계산</button></div>`;
+}
 function renderWorkout(){
- renderDays();let root=document.getElementById("workout");root.innerHTML=`<div class="card"><div class="name">오늘 컨디션은?</div><div class="condition">${CONDITIONS.map(([v,l])=>`<button class="${getCondition()===v?"active":""}" onclick="setCondition('${v}')">${l}</button>`).join("")}</div><div class="rec">${conditionAdvice()}</div></div>`;
+ renderDays();let root=document.getElementById("workout");root.innerHTML=`<div class="card"><div class="name">운동 장소</div><select id="v81ActivePlace" onchange="v81SelectPlace(this.value)">${v81PlaceOptions()}</select><div class="meta">장소별 구분 ON 운동에만 적용 · 장소 추가/수정은 설정에서 관리</div></div><div class="card"><div class="name">오늘 컨디션은?</div><div class="condition">${CONDITIONS.map(([v,l])=>`<button class="${getCondition()===v?"active":""}" onclick="setCondition('${v}')">${l}</button>`).join("")}</div><div class="rec">${conditionAdvice()}</div><div id="v74Recovery" class="rec"></div></div>`;v74RenderRecovery();
  cfg.routines[day].forEach((ex,i)=>{
   let chosen=selectedVariant(day,ex), recName=chosen, last=lastLog(day,recName), draft=JSON.parse(localStorage.getItem(draftKey(day,recName))||"null");
+  let baseline=!last?v71InitialBaseline(day,ex,chosen,draft):null;
+  let v72Plan=(!isNaN(i)&&ex.type!=="superset"&&ex.type!=="cardio"&&ex.role!=="유산소")?v72GetPlan(day,ex,chosen,effectiveSets(i)):null;
   let seed=(!last&&!draft)?SEEDS?.[day]?.[ex.name]:null;
   let isCardio=ex.type==="cardio"||ex.role==="유산소", isSuper=ex.type==="superset", displaySets=isCardio?ex.sets:effectiveSets(i);
   let prev=last?(isCardio?`${last.distance||"-"} km · ${last.minutes||"-"}분`:isSuper?last.sets.map(s=>`${s.w1||"-"}×${s.r1||"-"} + ${s.w2||"-"}×${s.r2||"-"} ${icon(s.e)}`).join(" · "):last.sets.map(s=>`${s.w||"-"}kg×${s.r||"-"} ${icon(s.e)}`).join(" · ")):"기록 없음";
-  let rr=isCardio?"":(()=>{let q=recommendation(ex,last);return `<div class="rec"><b>${q.title}</b><br>${q.body}</div>`})();
+  let rr=isCardio?"":(!last && baseline && ex.type!=="superset" ? v71BaselineText(baseline) : (()=>{let q=recommendation(ex,last);return `<div class="rec"><b>${q.title}</b><br>${q.body}</div>`})());
+  let v74Advice=!isCardio&&!isSuper?v74ExerciseAdvice(ex,i,recName):"";
   let variantUI=ex.variants?`<select onchange="setVariant(${i},this.value)" style="margin-top:7px">${ex.variants.map(v=>`<option ${v===chosen?"selected":""}>${v}</option>`).join("")}</select>`:"";
   let c=document.createElement("div");c.className="card";
   c.innerHTML=`<div class="row"><div><div class="name">${ex.name}</div><div class="meta">${ex.role} · ${isCardio?ex.reps:`${displaySets}세트 × ${ex.reps} · 휴식 <b>${fmt(ex.rest)}</b>`}</div>${variantUI}</div><div>${isCardio?"":`<button class="small" onclick="editRest(${i})">⏱</button>`} <button class="small" onclick="toggleAlt(${i})">대체</button></div></div>
-  <div class="meta" style="margin-top:7px">지난 기록${ex.variants?` (${chosen})`:""}: ${prev}</div>${rr}
+  <div class="meta" style="margin-top:7px">지난 기록${ex.variants?` (${chosen})`:""}: ${prev}</div>${rr}${v74Advice}${v80ExerciseAdvice(ex,chosen)}${v72Plan?v72PlanMarkup(i,v72Plan):""}
   ${isCardio?"":`<div class="row" style="margin-top:9px"><div><span class="meta">입력 적용</span> <button id="mode-all-${i}" class="small ${getApplyMode(i)==="all"?"active":""}" onclick="setApplyMode(${i},'all')">전체</button> <button id="mode-one-${i}" class="small ${getApplyMode(i)==="one"?"active":""}" onclick="setApplyMode(${i},'one')">1세트</button></div><div><select id="setmode-${i}" onchange="setSetMode(${i},this.value)" style="width:auto;padding:7px;font-size:12px"><option value="today" ${getSetMode(i)==="today"?"selected":""}>오늘만</option><option value="default" ${getSetMode(i)==="default"?"selected":""}>기본 변경</option></select> <button class="small" onclick="changeSets(${i},-1)">− 세트</button> <button class="small" onclick="changeSets(${i},1)">＋ 세트</button></div></div>`}
   <div id="rows-${i}"></div><div class="alt" id="alt-${i}"></div>`;
   if(!isCardio){c.innerHTML+=`<div style="margin-top:8px"><button class="small" onclick="v7SetNote(${i})">✎ 세트 메모·통증</button><span class="meta" id="v7NoteLabel-${i}">${v7NoteSummary(day,chosen)}</span></div>`;}
@@ -243,7 +420,7 @@ function renderWorkout(){
     rows.innerHTML=`<div class="grid"><div class="head">SET</div><div class="head">KG</div><div class="head">REPS</div><div class="head">강도</div><div class="head">✓</div></div>`;
     let warm=draft?.warmup||{};
     rows.insertAdjacentHTML("beforeend",`<div class="grid" style="opacity:.82"><div class="center"><b>0</b></div><input id="ww-${i}" inputmode="decimal" value="${warm.w||""}" placeholder="선택" oninput="saveDraft(${i})"><input id="wr-${i}" inputmode="numeric" value="${warm.r||""}" placeholder="선택" oninput="saveDraft(${i})"><div class="center meta">워밍업</div><button id="wc-${i}" class="${warm.done?"done":""}" onclick="completeWarmup(${i})">${warm.done?"✓":"○"}</button></div>`);
-    for(let s=0;s<displaySets;s++){let ds=draft?.sets?.[s]||{};if(seed){ds={...ds,w:ds.w||seed.w,r:ds.r||seed.r}}rows.insertAdjacentHTML("beforeend",`<div class="grid"><div class="center"><b>${s+1}</b></div><input id="w-${i}-${s}" inputmode="decimal" value="${ds.w||""}" placeholder="kg" oninput="propagate(${i},${s},'w')"><input id="r-${i}-${s}" inputmode="numeric" value="${ds.r||""}" placeholder="회" oninput="propagate(${i},${s},'r')"><select id="e-${i}-${s}" onchange="saveDraft(${i})">${effortOptions}</select><button id="c-${i}-${s}" class="${ds.done?"done":""}" onclick="completeSet(${i},${s})">${ds.done?"✓":"○"}</button></div>`);document.getElementById(`e-${i}-${s}`).value=ds.e||""}
+    for(let s=0;s<displaySets;s++){let ds=draft?.sets?.[s]||{};if(!draft && v72Plan?.targets?.[s]){ds={...ds,w:v72Plan.targets[s].w,r:v72Plan.targets[s].r}}if(!draft && !v72Plan && baseline && baseline.data?.sets?.[s]){let prev=baseline.data.sets[s];ds={...ds,w:prev.w,r:prev.r}}if(seed){ds={...ds,w:ds.w||seed.w,r:ds.r||seed.r}}rows.insertAdjacentHTML("beforeend",`<div class="grid"><div class="center"><b>${s+1}</b></div><input id="w-${i}-${s}" inputmode="decimal" value="${ds.w||""}" placeholder="kg" oninput="propagate(${i},${s},'w')"><input id="r-${i}-${s}" inputmode="numeric" value="${ds.r||""}" placeholder="회" oninput="propagate(${i},${s},'r')"><select id="e-${i}-${s}" onchange="saveDraft(${i})">${effortOptions}</select><button id="c-${i}-${s}" class="${ds.done?"done":""}" onclick="completeSet(${i},${s})">${ds.done?"✓":"○"}</button></div>`);document.getElementById(`e-${i}-${s}`).value=ds.e||""}
   }
   renderAlt(i);
  });
@@ -345,7 +522,7 @@ function renderAlt(i){
  let ex=cfg.routines[day][i],a=document.getElementById("alt-"+i),fixed=Array.isArray(ex.alts)?ex.alts:[], learned=roleDb(ex.role);
  let all=[...new Set([...fixed,...learned])].filter(x=>x&&x!==ex.name);
  let buttons=all.length?all.map(x=>`<span style="display:inline-flex;align-items:center;gap:2px;margin:2px"><button class="small" onclick='replaceExercise(${i},${JSON.stringify(x)})'>${x}</button>${learned.includes(x)?`<button class="small" title="DB에서 삭제" onclick='removeFromAltDb(${JSON.stringify(ex.role)},${JSON.stringify(x)})'>×</button>`:""}</span>`).join(""):`<span class="meta">등록된 대체운동 없음 · 아래에서 직접 입력 가능</span>`;
- a.innerHTML=`<div class="meta">대체운동 · 같은 역할(${ex.role})의 학습된 운동도 표시됩니다.</div>${buttons}<div class="row" style="margin-top:8px"><input id="custom-${i}" placeholder="운동명 검색 또는 직접 입력" oninput="suggestAlternatives(${i})"><button class="small primary" onclick="customReplace(${i})">사용</button></div><div id="suggest-${i}" style="margin-top:8px"></div>`
+ a.innerHTML=`${v74AlternativeMarkup(i,ex)}<div class="meta">대체운동 · 같은 역할(${ex.role})의 학습된 운동도 표시됩니다.</div>${buttons}<div class="row" style="margin-top:8px"><input id="custom-${i}" placeholder="운동명 검색 또는 직접 입력" oninput="suggestAlternatives(${i})"><button class="small primary" onclick="customReplace(${i})">사용</button></div><div id="suggest-${i}" style="margin-top:8px"></div>`
 }
 function suggestAlternatives(i){
  const el=document.getElementById("custom-"+i),host=document.getElementById("suggest-"+i);
@@ -373,6 +550,7 @@ function suggestAlternatives(i){
  :`<div class="meta">일치하는 운동이 없습니다. 직접 입력 후 ‘사용’을 누르면 새 운동으로 등록할 수 있습니다.</div>`;
 }
 function replaceExercise(i,n){
+ return v75ChooseAlternative(i,n);
  let old=cfg.routines[day][i],oldName=old.name,role=old.role;if(oldName===n)return;
  let p=exerciseProfile(n),slot=normalizeRole(role);
  if(p && p.primary!==slot && !p.muscles.includes(slot)){
@@ -396,16 +574,16 @@ function editRest(i){let ex=cfg.routines[day][i],v=prompt(`${ex.name} 휴식시�
 function historyKey(){return "physique-history"}
 function getHistory(){try{return JSON.parse(localStorage.getItem(historyKey())||"[]")}catch{return []}}
 function saveHistory(h){localStorage.setItem(historyKey(),JSON.stringify(h))}
-function finishWorkout(){let now=new Date().toISOString(),session={id:now,date:now,day,condition:getCondition(),exercises:[]};cfg.routines[day].forEach((ex,i)=>{let rn=recordName(day,ex),d=JSON.parse(localStorage.getItem(draftKey(day,rn))||"null");if(d){d.date=now;d.condition=getCondition();d.variant=rn;localStorage.setItem(logKey(day,rn),JSON.stringify(d));session.exercises.push({name:rn,role:ex.role,type:ex.type||"strength",data:d});localStorage.removeItem(draftKey(day,rn));localStorage.removeItem(todaySetsKey(i))}});if(session.exercises.length){let h=getHistory();h.unshift(session);saveHistory(h);v7AdvanceSequence(day)}alert("운동 기록 저장 완료");renderWorkout();renderHistory()}
+function finishWorkout(){let now=new Date().toISOString(),session={id:now,date:now,day,condition:getCondition(),placeId:v81ActivePlace(),exercises:[]};cfg.routines[day].forEach((ex,i)=>{let rn=recordName(day,ex),d=JSON.parse(localStorage.getItem(draftKey(day,rn))||"null");if(d){d.date=now;d.condition=getCondition();d.variant=rn;localStorage.setItem(logKey(day,rn),JSON.stringify(d));session.exercises.push({name:rn,placeId:v81Enabled(rn)?v81ActivePlace():null,role:ex.role,type:ex.type||"strength",data:d,plan:(()=>{try{return JSON.parse(localStorage.getItem(v72PlanKey(day,rn))||"null")}catch{return null}})()});localStorage.removeItem(v72PlanKey(day,rn));localStorage.removeItem(draftKey(day,rn));localStorage.removeItem(todaySetsKey(i))}});if(session.exercises.length){let h=getHistory();h.unshift(session);saveHistory(h);v7AdvanceSequence(day);v75RestoreDay(day)}alert("운동 기록 저장 완료");renderWorkout();renderHistory()}
 
 function histSetText(s){if(!s)return "";if(s.aW!==undefined||s.bW!==undefined)return `A ${s.aW||"-"}kg×${s.aR||"-"} / B ${s.bW||"-"}kg×${s.bR||"-"}${s.feel?" "+feelIcon(s.feel):""}`;return `${s.w||"-"}kg × ${s.r||"-"}${s.feel?" "+feelIcon(s.feel):""}`}
-function renderHistory(){let host=document.getElementById("historyBody");if(!host)return;let h=getHistory();if(!h.length){host.innerHTML='<div class="card"><div class="meta">아직 세션 기록이 없습니다. 다음 운동에서 ‘오늘 운동 완료’를 누르면 자동 저장됩니다.</div></div>';return}host.innerHTML=h.map((s,i)=>{let sets=s.exercises.reduce((n,e)=>n+(e.type==="cardio"?0:(e.data?.sets||[]).filter(x=>x.done!==false).length),0);let weighted=weightedTotals(s.exercises.map(e=>({name:e.name,role:e.role,type:e.type,count:(e.data?.sets||[]).filter(x=>x.done!==false).length})));return `<div class="card"><div class="name">${new Date(s.date).toLocaleDateString("ko-KR")} · ${s.day}</div><div class="meta">${sets}세트 · ${s.exercises.length}개 운동</div><div class="meta">${muscleSummary(weighted)}</div><button class="small" onclick="openSession(${i})">상세 기록</button><button class="small" onclick="deleteSession(${i})">삭제</button></div>`}).join("")}
-function openSession(i){let s=getHistory()[i],m=document.getElementById("historyModal");if(!s)return;let rows=s.exercises.map(e=>{let d=e.data||{},detail=e.type==="cardio"?`${d.distance||"-"}km · ${d.minutes||"-"}분`:(d.sets||[]).filter(x=>x.done!==false).map(histSetText).join(" / ");return `<div style="padding:9px 0;border-top:1px solid #333"><b>${e.name}</b><div class="meta">${detail||"기록 없음"}</div><button class="small" onclick='openExerciseHistory(${JSON.stringify(e.name)})'>이 운동 기록</button></div>`}).join("");m.innerHTML=`<div class="card" style="position:fixed;z-index:9999;left:4%;right:4%;top:6%;max-height:84%;overflow:auto"><div class="name">${new Date(s.date).toLocaleString("ko-KR")} · ${s.day}</div>${rows}<button onclick="document.getElementById('historyModal').innerHTML=''">닫기</button></div>`}
+function renderHistory(){let host=document.getElementById("historyBody");if(!host)return;let h=getHistory();if(!h.length){host.innerHTML='<div class="card"><div class="meta">아직 세션 기록이 없습니다. 다음 운동에서 ‘오늘 운동 완료’를 누르면 자동 저장됩니다.</div></div>';return}host.innerHTML=h.map((s,i)=>{let sets=s.exercises.reduce((n,e)=>n+(e.type==="cardio"?0:v7ValidSets(e).length),0);let weighted=weightedTotals(s.exercises.map(e=>({name:e.name,role:e.role,type:e.type,count:v7ValidSets(e).length})));return `<div class="card"><div class="name">${new Date(s.date).toLocaleDateString("ko-KR")} · ${s.day}</div><div class="meta">${sets}세트 · ${s.exercises.length}개 운동</div><div class="meta">${muscleSummary(weighted)}</div><button class="small" onclick="openSession(${i})">상세 기록</button><button class="small" onclick="deleteSession(${i})">삭제</button></div>`}).join("")}
+function openSession(i){let s=getHistory()[i],m=document.getElementById("historyModal");if(!s)return;let rows=s.exercises.map(e=>{let d=e.data||{},detail=e.type==="cardio"?`${d.distance||"-"}km · ${d.minutes||"-"}분`:(d.sets||[]).filter(x=>x.done!==false).map(histSetText).join(" / ");return `<div style="padding:9px 0;border-top:1px solid #333"><b>${e.name}</b><div class="meta">${detail||"기록 없음"}</div>${e.plan?.targets?`<div class="meta">목표 대비: ${e.data?.sets?.map((a,j)=>{let t=e.plan.targets[j];return t&&a.done!==false&&Number(a.r)>0?`${j+1}세트 ${Number(a.r)-Number(t.r)>=0?"+":""}${Number(a.r)-Number(t.r)}회`:""}).filter(Boolean).join(" · ")}</div>`:""}<button class="small" onclick='openExerciseHistory(${JSON.stringify(e.name)})'>이 운동 기록</button></div>`}).join("");m.innerHTML=`<div class="card" style="position:fixed;z-index:9999;left:4%;right:4%;top:6%;max-height:84%;overflow:auto"><div class="name">${new Date(s.date).toLocaleString("ko-KR")} · ${s.day}</div>${rows}<button onclick="document.getElementById('historyModal').innerHTML=''">닫기</button></div>`}
 function openExerciseHistory(name){let rows=[];getHistory().forEach(s=>s.exercises.filter(e=>e.name===name).forEach(e=>rows.push({s,e})));let m=document.getElementById("historyModal");m.innerHTML=`<div class="card" style="position:fixed;z-index:9999;left:4%;right:4%;top:6%;max-height:84%;overflow:auto"><div class="name">${name} · 과거 기록</div>${rows.map(x=>{let d=x.e.data||{},detail=x.e.type==="cardio"?`${d.distance||"-"}km · ${d.minutes||"-"}분`:(d.sets||[]).filter(q=>q.done!==false).map(histSetText).join(" / ");return `<div style="padding:8px 0;border-top:1px solid #333"><b>${new Date(x.s.date).toLocaleDateString("ko-KR")}</b> · ${x.s.day}<div class="meta">${detail}</div></div>`}).join("")||"<div class='meta'>기록 없음</div>"}<button onclick="document.getElementById('historyModal').innerHTML=''">닫기</button></div>`}
 function deleteSession(i){if(!confirm("이 운동 세션 기록을 삭제할까요?"))return;let h=getHistory();h.splice(i,1);saveHistory(h);renderHistory()}
 
 function startTimer(s,l){clearInterval(timer);remaining=s;timerLabel=l;tick();timer=setInterval(()=>{remaining--;tick();if(remaining<=0){clearInterval(timer);document.getElementById("timerLabel").textContent="휴식 완료"}},1000)} function addTime(s){remaining+=s;tick()} function stopTimer(){clearInterval(timer);remaining=0;timerLabel="";tick();document.getElementById("timerLabel").textContent="대기"} function tick(){document.getElementById("clock").textContent=fmt(Math.max(0,remaining));document.getElementById("timerLabel").textContent=timerLabel||"대기"} function fmt(s){return `${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`}
-function saveConfig(){localStorage.setItem("physique-config",JSON.stringify(cfg))}
+function saveConfig(){localStorage.setItem("physique-config",JSON.stringify(v75OriginalConfig()))}
 
 // Physique v6.4: body composition tracker
 const BC_KEY="physique-inbody-v1";
@@ -462,7 +640,7 @@ function renderBodyComp(){
  const history=typeof getHistory==="function"?getHistory():[];
  const previousDate=prev?.date||"";
  const sessions=history.filter(s=>{let d=String(s.date||"").slice(0,10);return d>previousDate&&d<=last.date});
- const setCount=sessions.reduce((sum,s)=>sum+(s.exercises||[]).reduce((n,e)=>n+(e.type==="cardio"?0:(e.data?.sets||[]).filter(x=>x.done!==false).length),0),0);
+ const setCount=sessions.reduce((sum,s)=>sum+(s.exercises||[]).reduce((n,e)=>n+(e.type==="cardio"?0:v7ValidSets(e).length),0),0);
  comparison.innerHTML=`<div style="border-top:1px solid #ddd;padding-top:12px"><b>운동 수행과 비교</b><div class="meta" style="margin-top:5px">${prev?`${prev.date} ~ ${last.date}`:"첫 측정까지"} · Physique에 완료 저장된 운동 ${sessions.length}회 / ${setCount}세트</div><div class="meta">앱에 저장된 세션만 집계합니다. 기록하지 않은 운동은 포함되지 않습니다.</div></div>`;
  host.innerHTML=`<b>전체 측정 기록 (${data.length}회)</b>`+data.slice().reverse().map(d=>`<div class="row" style="justify-content:space-between;gap:6px;border-top:1px solid #ddd;padding:9px 0;align-items:center;flex-wrap:wrap"><div><b>${d.date}</b><div class="meta">${bcFmt(d.weight,"kg")} · 근육 ${bcFmt(d.muscle,"kg")} · 지방 ${bcFmt(d.fat,"%")}</div></div><div><button class="small" onclick="editBodyComp('${d.date}')">수정</button><button class="small" onclick="deleteBodyComp('${d.date}')">삭제</button></div></div>`).join("")
 }
@@ -538,16 +716,203 @@ function v7SetNote(i){let ex=cfg.routines[day][i],name=recordName(day,ex),d=v7Ge
 function v7NoteSummary(day,name){let n=v7Get().notes[day+'|'+name];return n?(n.severity?' ⚠ '+n.setNumber+'세트 '+n.location+' '+n.severity+'/10':' ✎ '+n.setNumber+'세트 메모'):''}
 function v7HasRecentPain(name){let cutoff=Date.now()-30*86400000;return v7Get().pain.some(p=>p.name===name&&new Date(p.at).getTime()>cutoff)}
 function v7WeekStart(offset){let d=new Date(),w=(d.getDay()+6)%7;d.setHours(0,0,0,0);d.setDate(d.getDate()-w-7*offset);return d}
-function v7ValidSets(e){return (e.data?.sets||[]).filter(x=>x.done===true&&((x.w!==undefined&&x.r!==undefined)||(x.w1!==undefined)))}
+function v7ValidSets(e){return (e.data?.sets||[]).filter(x=>x&&x.done===true&&((Number(x.w)>0&&Number(x.r)>0)||(Number(x.w1)>0&&Number(x.r1)>0)))}
 function v7RenderVolume(){let offset=Number(document.getElementById('v7Week').value),start=v7WeekStart(offset),end=new Date(start.getTime()+7*86400000),direct={},weighted={},total=0;getHistory().forEach(s=>{let dt=new Date(s.date);if(dt<start||dt>=end)return;(s.exercises||[]).forEach(e=>{if(e.type==='cardio')return;let sets=v7ValidSets(e);total+=sets.length;let ws=muscleWeights(e.name,e.role),primary=Object.entries(ws).sort((a,b)=>b[1]-a[1])[0]?.[0]||normalizeRole(e.role);direct[primary]=(direct[primary]||0)+sets.length;Object.entries(ws).forEach(([m,w])=>weighted[m]=(weighted[m]||0)+sets.length*w)})});let keys=[...new Set([...Object.keys(weighted),...Object.keys(direct)])].sort((a,b)=>(weighted[b]||0)-(weighted[a]||0));document.getElementById('v7Volume').innerHTML=`<p class="meta">완료 본세트 ${total}개 · ${v7LocalDate(start)} ~ ${v7LocalDate(new Date(end.getTime()-86400000))}</p>`+(keys.length?keys.map(k=>`<div style="margin:10px 0"><div class="row"><b>${v7Escape(k)}</b><span class="meta">직접 ${direct[k]||0} · 환산 ${(weighted[k]||0).toFixed(1)}</span></div><div style="height:7px;border-radius:8px;background:#333;overflow:hidden"><div style="height:100%;width:${Math.min(100,(weighted[k]||0)/20*100)}%;background:#9ca3af"></div></div></div>`).join(''):'<p class="meta">해당 주에 완료된 운동 세션이 없습니다.</p>')}
 function v7Escape(t){return String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function v7GraphData(){let data={};getHistory().slice().reverse().forEach(s=>(s.exercises||[]).forEach(e=>{let sets=v7ValidSets(e).filter(x=>x.w!==undefined&&Number(x.w)>0&&Number(x.r)>0);if(!sets.length)return;let vals={top:Math.max(...sets.map(x=>Number(x.w))),reps:Math.max(...sets.map(x=>Number(x.r))),volume:sets.reduce((n,x)=>n+Number(x.w)*Number(x.r),0),e1rm:Math.max(...sets.filter(x=>Number(x.r)<=12).map(x=>Number(x.w)*(1+Number(x.r)/30)),0)};(data[e.name]??=[]).push({date:s.date,...vals})}));return data}
-function v7RenderGraph(){let key=document.getElementById('v7Exercise').value,metric=document.getElementById('v7Metric').value,values=(v7GraphData()[key]||[]).slice(-12);let host=document.getElementById('v7Graph');if(!values.length){host.innerHTML='<p class="meta">이 운동의 완료 기록이 없습니다.</p>';return}let max=Math.max(...values.map(x=>x[metric]),1),min=Math.min(...values.map(x=>x[metric]),0),w=340,h=165,pad=22,span=max-min||1;let pts=values.map((x,i)=>`${pad+(w-2*pad)*(values.length===1?.5:i/(values.length-1))},${h-pad-(h-2*pad)*(x[metric]-min)/span}`).join(' ');host.innerHTML=`<svg viewBox="0 0 ${w} ${h}" style="width:100%;max-height:220px" role="img" aria-label="운동 성장 그래프"><polyline fill="none" stroke="#93c5fd" stroke-width="3" points="${pts}"/>${values.map((x,i)=>{let cx=pad+(w-2*pad)*(values.length===1?.5:i/(values.length-1)),cy=h-pad-(h-2*pad)*(x[metric]-min)/span;return `<circle cx="${cx}" cy="${cy}" r="4" fill="#93c5fd"/>`}).join('')}</svg><div class="meta">최근 ${values.length}회 · 첫 ${(values[0][metric]||0).toFixed(1)} → 최근 ${(values.at(-1)[metric]||0).toFixed(1)} ${metric==='reps'?'회':metric==='volume'?'kg·회':'kg'} · 같은 기구/변형만 비교하세요.</div>`}
-function v7RenderPlan(){let d=v7Get();document.getElementById('v7Schedule').innerHTML=d.sequence.map((name,i)=>`<div class="row" style="padding:8px 0;border-bottom:1px solid #333"><span>${i===d.nextIndex?'▶ ':''}${i+1}. ${v7Escape(name)}</span><button class="small" onclick="v7ChooseNext(${i})">다음으로</button></div>`).join('')+'<div class="row" style="margin-top:12px"><button class="primary" onclick="v7SelectNext()">다음 운동 시작</button><button onclick="v7Rest()">오늘 휴식 기록</button></div>';v7RenderCondition();v7RenderVolume();let all=v7GraphData(),sel=document.getElementById('v7Exercise'),current=sel.value;sel.innerHTML=Object.keys(all).sort().map(x=>`<option value="${v7Escape(x)}">${v7Escape(x)}</option>`).join('');if(all[current])sel.value=current;v7RenderGraph()}
-function v7ExportBackup(){let keys=Object.keys(localStorage).filter(k=>k.startsWith('physique-')),items={};keys.forEach(k=>items[k]=localStorage.getItem(k));let payload={format:'physique-backup',schemaVersion:7,appVersion:'7.0.0',exportedAt:new Date().toISOString(),items};let blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='physique_backup_'+v7LocalDate()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+function v7GraphData(){let data={};getHistory().slice().reverse().forEach(s=>(s.exercises||[]).forEach(e=>{let sets=v7ValidSets(e).filter(x=>x.w!==undefined&&Number(x.w)>0&&Number(x.r)>0);if(!sets.length)return;let vals={top:Math.max(...sets.map(x=>Number(x.w))),reps:Math.max(...sets.map(x=>Number(x.r))),volume:sets.reduce((n,x)=>n+Number(x.w)*Number(x.r),0),e1rm:Math.max(...sets.filter(x=>Number(x.r)<=12).map(x=>Number(x.w)*(1+Number(x.r)/30)),0)};(data[e.name]??=[]).push({date:s.date,placeId:Object.prototype.hasOwnProperty.call(e,'placeId')?e.placeId:(s.placeId??null),...vals})}));return data}
+function v811GraphValues(name){
+ const all=v7GraphData()[name]||[];
+ if(!v81Enabled(name))return all;
+ const scope=document.getElementById('v811GraphScope')?.value||'current';
+ if(scope==='all')return all;
+ return all.filter(x=>x.placeId===v81ActivePlace());
+}
+function v811UpdateGraphScope(){
+ const el=document.getElementById('v811GraphScope'),name=document.getElementById('v7Exercise')?.value;
+ if(!el)return;
+ el.disabled=!v81Enabled(name);
+ el.title=v81Enabled(name)?'현재 장소 또는 전체 기록':'장소 구분 OFF: 모든 장소 통합';
+}
+function v7RenderGraph(){v811UpdateGraphScope();let key=document.getElementById('v7Exercise').value,metric=document.getElementById('v7Metric').value,range=Number(document.getElementById('v73GraphRange')?.value||10),values=range?v811GraphValues(key).slice(-range):v811GraphValues(key);let host=document.getElementById('v7Graph');if(!values.length){host.innerHTML='<p class="meta">이 운동의 완료 기록이 없습니다.</p>';v73RenderPB();return}let max=Math.max(...values.map(x=>x[metric]),1),min=Math.min(...values.map(x=>x[metric]),0),w=340,h=165,pad=22,span=max-min||1;let pts=values.map((x,i)=>`${pad+(w-2*pad)*(values.length===1?.5:i/(values.length-1))},${h-pad-(h-2*pad)*(x[metric]-min)/span}`).join(' ');host.innerHTML=`<svg viewBox="0 0 ${w} ${h}" style="width:100%;max-height:220px" role="img" aria-label="운동 성장 그래프"><polyline fill="none" stroke="#93c5fd" stroke-width="3" points="${pts}"/>${values.map((x,i)=>{let cx=pad+(w-2*pad)*(values.length===1?.5:i/(values.length-1)),cy=h-pad-(h-2*pad)*(x[metric]-min)/span;return `<circle cx="${cx}" cy="${cy}" r="4" fill="#93c5fd"/>`}).join('')}</svg><div class="meta">최근 ${values.length}회 · 첫 ${(values[0][metric]||0).toFixed(1)} → 최근 ${(values.at(-1)[metric]||0).toFixed(1)} ${metric==='reps'?'회':metric==='volume'?'kg·회':'kg'} · 같은 기구/변형만 비교하세요.</div>`;v73RenderPB()}
+// v7.3 analytics: derived only from completed historical sets; no legacy storage changes.
+const V73_TARGET_KEY='physique-v73-muscle-targets';
+function v73Targets(){try{let v=JSON.parse(localStorage.getItem(V73_TARGET_KEY)||'{}');return v&&typeof v==='object'&&!Array.isArray(v)?v:{}}catch(e){return {}}}
+function v73WeekData(offset){let start=v7WeekStart(offset),end=new Date(start);end.setDate(end.getDate()+7);let direct={},weighted={},sets=0,sessions=0;getHistory().forEach(s=>{let dt=new Date(s.date);if(!(dt>=start&&dt<end))return;sessions++;(s.exercises||[]).forEach(e=>{if(e.type==='cardio')return;let count=v7ValidSets(e).length;if(!count)return;sets+=count;let ws=muscleWeights(e.name,e.role),primary=Object.entries(ws).sort((a,b)=>b[1]-a[1])[0]?.[0]||normalizeRole(e.role);direct[primary]=(direct[primary]||0)+count;Object.entries(ws).forEach(([m,w])=>weighted[m]=(weighted[m]||0)+count*Number(w||0))})});return {start,weighted,direct,sets,sessions}}
+function v73SetTarget(name){let targets=v73Targets(),old=targets[name]??'',answer=prompt(name+' 주간 환산 세트 목표 (빈칸은 목표 삭제)',String(old));if(answer===null)return;if(answer.trim()==='')delete targets[name];else{let n=Number(answer);if(!Number.isFinite(n)||n<=0||n>100){alert('0보다 크고 100 이하인 숫자를 입력해 주세요.');return}targets[name]=n}localStorage.setItem(V73_TARGET_KEY,JSON.stringify(targets));v73RenderTrends()}
+function v73RenderTrends(){let host=document.getElementById('v73Trends');if(!host)return;let weeks=[3,2,1,0].map(v73WeekData),latest=weeks[3],prev=weeks[2],keys=[...new Set(weeks.flatMap(w=>Object.keys(w.weighted)).concat(Object.keys(v73Targets())))].sort((a,b)=>(latest.weighted[b]||0)-(latest.weighted[a]||0));let max=Math.max(1,...weeks.map(w=>w.sets));host.innerHTML='<div class="name" style="margin-top:14px">최근 4주 운동 추세</div>'+weeks.map((w,i)=>`<div class="row" style="align-items:center;gap:8px;margin:7px 0"><span class="meta" style="min-width:55px">${i===3?'이번 주':(3-i)+'주 전'}</span><div style="flex:1;background:#333;border-radius:5px;height:10px"><div style="background:#93c5fd;height:100%;border-radius:5px;width:${Math.round(100*w.sets/max)}%"></div></div><b>${w.sets}세트</b><span class="meta">${w.sessions}회</span></div>`).join('')+`<div class="meta">지난주 대비 본세트 ${latest.sets-prev.sets>=0?'+':''}${latest.sets-prev.sets}개 · 현재 주는 진행 중입니다.</div>`;
+let targets=v73Targets(),out=document.getElementById('v73Targets');if(!out)return;out.innerHTML='<div class="name" style="margin:15px 0 7px">근육별 목표 · 4주 비교</div>'+(keys.length?keys.map(k=>{let vals=weeks.map(w=>w.weighted[k]||0),goal=targets[k],pct=goal?Math.round(vals[3]/goal*100):null;return `<div style="border-top:1px solid #333;padding:10px 0"><div class="row"><b>${v7Escape(k)}</b><button class="small" onclick='v73SetTarget(${JSON.stringify(k)})'>${goal?'목표 '+goal+' 수정':'목표 설정'}</button></div><div class="meta">환산 세트 (오래된 주 → 이번 주): ${vals.map(v=>v.toFixed(1)).join(' / ')}${goal?' · 달성 '+pct+'%':''}</div>${goal?`<div style="height:6px;background:#333;border-radius:6px;margin-top:6px"><div style="height:100%;width:${Math.min(100,pct)}%;background:#93c5fd;border-radius:6px"></div></div>`:''}</div>`}).join(''):'<div class="meta">완료된 운동 기록이 쌓이면 표시됩니다.</div>')}
+function v73RenderPB(){let key=document.getElementById('v7Exercise')?.value,host=document.getElementById('v73PB'),plateau=document.getElementById('v73Plateau');if(!host||!plateau)return;let all=v811GraphValues(key);if(!all.length){host.innerHTML='';plateau.innerHTML='';return}let top=Math.max(...all.map(x=>x.top)),volume=Math.max(...all.map(x=>x.volume)),bestReps=Math.max(...all.map(x=>x.reps)),last=all[all.length-1];host.innerHTML=`<div class="meta" style="margin-top:12px">전체 기록 PB · 최고 중량 <b>${top.toFixed(1)}kg</b> · 최고 반복 <b>${bestReps}회</b> · 세션 볼륨 <b>${volume.toFixed(0)}kg·회</b></div>`;
+if(all.length<4){plateau.innerHTML='<div class="meta">정체 분석: 기록이 4회 이상 쌓이면 표시됩니다.</div>';return}let recent=all.slice(-3),older=all.slice(-6,-3);if(older.length<3){plateau.innerHTML='<div class="meta">정체 분석: 비교 가능한 기록이 더 필요합니다.</div>';return}let oldBest=Math.max(...older.map(x=>x.e1rm||0)),newBest=Math.max(...recent.map(x=>x.e1rm||0));let improved=newBest>oldBest*1.02||Math.max(...recent.map(x=>x.top))>Math.max(...older.map(x=>x.top));plateau.innerHTML=`<div class="meta">${improved?'최근 기록에서 개선 신호가 있습니다.':'최근 3회에서 뚜렷한 개선이 확인되지 않습니다. 반복수·RIR·기구 차이도 함께 확인하세요.'} · 정체 판정이 아닌 참고 지표입니다.</div>`}
+function v7RenderPlan(){let d=v7Get();document.getElementById('v7Schedule').innerHTML=d.sequence.map((name,i)=>`<div class="row" style="padding:8px 0;border-bottom:1px solid #333"><span>${i===d.nextIndex?'▶ ':''}${i+1}. ${v7Escape(name)}</span><button class="small" onclick="v7ChooseNext(${i})">다음으로</button></div>`).join('')+'<div class="row" style="margin-top:12px"><button class="primary" onclick="v7SelectNext()">다음 운동 시작</button><button onclick="v7Rest()">오늘 휴식 기록</button></div>';v7RenderCondition();v7RenderVolume();v73RenderTrends();v80RenderCoach();let all=v7GraphData(),sel=document.getElementById('v7Exercise'),current=sel.value;sel.innerHTML=Object.keys(all).sort().map(x=>`<option value="${v7Escape(x)}">${v7Escape(x)}</option>`).join('');if(all[current])sel.value=current;v7RenderGraph()}
+function v7ExportBackup(){let keys=Object.keys(localStorage).filter(k=>k.startsWith('physique-')),items={};keys.forEach(k=>items[k]=localStorage.getItem(k));let payload={format:'physique-backup',schemaVersion:7,appVersion:'8.2.0',exportedAt:new Date().toISOString(),items};let blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='physique_backup_'+v7LocalDate()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}
 let v7RestoreCandidate=null;
-function v7PreviewBackup(ev){let f=ev.target.files?.[0];v7RestoreCandidate=null;if(!f)return;let reader=new FileReader();reader.onload=()=>{try{let data=JSON.parse(reader.result);if(data.format!=='physique-backup'||!data.items||typeof data.items!=='object'||Array.isArray(data.items))throw Error('백업 형식이 아닙니다.');let entries=Object.entries(data.items);if(!entries.length||entries.some(([k,v])=>!k.startsWith('physique-')||typeof v!=='string'))throw Error('키/값 검증 실패');v7RestoreCandidate=data;document.getElementById('v7BackupPreview').textContent=`${entries.length}개 데이터 항목 · ${data.exportedAt||'날짜 없음'} · 복원 시 현재 Physique 데이터가 교체됩니다.`}catch(e){document.getElementById('v7BackupPreview').textContent='복원 불가: '+e.message}};reader.readAsText(f)}
+function v7PreviewBackup(ev){let f=ev.target.files?.[0];v7RestoreCandidate=null;if(!f)return;let reader=new FileReader();reader.onload=()=>{try{let data=JSON.parse(reader.result);if(data.format!=='physique-backup'||!data.items||typeof data.items!=='object'||Array.isArray(data.items))throw Error('백업 형식이 아닙니다.');if(!Number.isInteger(data.schemaVersion)||data.schemaVersion<1||data.schemaVersion>7)throw Error('지원하지 않는 백업 스키마입니다.');if(f.size>20*1024*1024)throw Error('백업 파일이 20MB를 초과합니다.');let entries=Object.entries(data.items);if(!entries.length||entries.some(([k,v])=>!k.startsWith('physique-')||typeof v!=='string'))throw Error('키/값 검증 실패');v7RestoreCandidate=data;document.getElementById('v7BackupPreview').textContent=`${entries.length}개 데이터 항목 · ${data.exportedAt||'날짜 없음'} · 복원 시 현재 Physique 데이터가 교체됩니다.`}catch(e){document.getElementById('v7BackupPreview').textContent='복원 불가: '+e.message}};reader.readAsText(f)}
 function v7RestoreBackup(){if(!v7RestoreCandidate){alert('먼저 유효한 백업 파일을 선택하세요.');return}if(!confirm('현재 Physique 데이터가 백업 파일의 데이터로 교체됩니다. 기존 데이터를 먼저 백업했나요?'))return;let rollback={};Object.keys(localStorage).filter(k=>k.startsWith('physique-')).forEach(k=>rollback[k]=localStorage.getItem(k));try{Object.keys(rollback).forEach(k=>localStorage.removeItem(k));Object.entries(v7RestoreCandidate.items).forEach(([k,v])=>localStorage.setItem(k,v));alert('복원 완료. 앱을 다시 불러옵니다.');location.reload()}catch(e){Object.keys(localStorage).filter(k=>k.startsWith('physique-')).forEach(k=>localStorage.removeItem(k));Object.entries(rollback).forEach(([k,v])=>localStorage.setItem(k,v));alert('복원 실패. 이전 데이터를 복구했습니다: '+e.message)}}
+
+
+// v7.4: suggestions are advisory, never silently modify defaults or completed records.
+const V74_KEY='physique-v74-preferences';
+function v74Prefs(){try{return JSON.parse(localStorage.getItem(V74_KEY)||'{}')||{}}catch{return {}}}
+function v74TodayAdvice(){
+ const x=v7Get().conditions[v7LocalDate()],level=getCondition();
+ if(x?.pain)return {type:'rest',reason:'오늘 관절 통증을 기록했어요. 통증 유발 동작을 중단하고 운동을 재검토하세요.'};
+ if(x&&(x.fatigue>=4||(x.sleep!==null&&x.sleep<5.5)))return {type:'rest',reason:'수면 부족 또는 심한 피로가 기록되었습니다. 휴식을 우선 권장합니다.'};
+ if(level==='verybad')return {type:'rest',reason:'매우 나쁜 컨디션이므로 휴식을 우선 권장합니다.'};
+ if(level==='bad'||(x&&(x.fatigue===3||(x.sleep!==null&&x.sleep<7))))return {type:'reduced',reason:'오늘은 보조 운동 세트 수를 줄이고 여유 있게 수행하는 것을 고려하세요.'};
+ return {type:'normal',reason:'기본 루틴을 유지하세요. 컨디션이 좋아도 무리한 증량은 권하지 않습니다.'};
+}
+function v74RenderRecovery(){const host=document.getElementById('v74Recovery');if(!host)return;let a=v74TodayAdvice();host.innerHTML='<b>v7.4 회복 기반 제안 · '+(a.type==='rest'?'휴식 우선':a.type==='reduced'?'운동량 축소 검토':'기본 계획')+'</b><br>'+v7Escape(a.reason)+(a.type==='reduced'?'<br><button class="small" onclick="v74ReduceToday()">오늘만 보조 운동 각 1세트 줄이기</button>':'')+'<div class="meta">제안은 자동 적용되지 않으며, 완료한 세트는 변경하지 않습니다.</div>'}
+function v74ReduceToday(){
+ if(v74TodayAdvice().type!=='reduced')return;
+ if(!confirm('오늘만 보조 운동을 각 1세트 줄일까요? 이미 완료한 세트는 유지합니다.'))return;
+ let changed=0;
+ cfg.routines[day].forEach((ex,i)=>{
+  if(i<2||ex.type==='cardio'||ex.role==='유산소'||ex.type==='superset')return;
+  let old=effectiveSets(i);if(old<=1)return;
+  let name=recordName(day,ex),draft;try{draft=JSON.parse(localStorage.getItem(draftKey(day,name))||'null')}catch{}
+  let done=(draft?.sets||[]).reduce((n,x,j)=>x?.done?Math.max(n,j+1):n,0);
+  let next=Math.max(1,done,old-1);if(next>=old)return;
+  localStorage.setItem(todaySetsKey(i),String(next));
+  if(draft?.sets){draft.sets=draft.sets.slice(0,next);localStorage.setItem(draftKey(day,name),JSON.stringify(draft))}
+  localStorage.removeItem(v72PlanKey(day,name));changed++;
+ });
+ alert(changed?changed+'개 보조 운동의 오늘 세트 수를 조정했습니다.':'조정할 수 있는 미완료 보조 세트가 없습니다.');renderWorkout();
+}
+function v74ExerciseAdvice(ex,i,name){
+ const history=getHistory(),recent=[];
+ for(const session of history){const e=(session.exercises||[]).find(x=>x.name===name);if(!e)continue;const sets=(e.data?.sets||[]).filter(v72ValidSet);if(sets.length)recent.push({sets,date:session.date});if(recent.length>=4)break}
+ const risk=v7HasRecentPain(name),lower=/하체|레그|스쿼트|런지|데드리프트|힙 쓰러스트/i.test(day+' '+name);
+ let lines=[];
+ if(risk)lines.push('⚠ 최근 통증 기록: 증량보다 통증 원인 확인과 대체 운동 검토가 우선입니다.');
+ if(lower)lines.push('하체 안전 제한: 실신 이력을 고려해 자동 증량·실패지점 도전을 권하지 않습니다. 의료 평가를 우선하세요.');
+ if(recent.length>=3&&!risk&&!lower){
+  const totals=recent.slice(0,3).map(x=>x.sets.reduce((n,t)=>n+Number(t.r||0),0));
+  if(totals[0]<=totals[1]&&totals[1]<=totals[2])lines.push('최근 3회 총 반복수가 증가하지 않았습니다. 컨디션·휴식·운동 순서를 점검하세요. 세트 추가를 자동 권하지 않습니다.');
+ }
+ return lines.length?'<div class="rec"><b>v7.4 운동별 조정 가이드</b><br>'+lines.map(v7Escape).join('<br>')+'</div>':'';
+}
+function v74Movement(name){let n=String(name).toLowerCase().replace(/\s/g,'');
+ if(/스쿼트|레그프레스|레그익스텐션|런지/.test(n))return 'knee';
+ if(/레그컬|데드리프트/.test(n))return 'hinge';
+ if(/힙쓰러스트|힙어브덕션/.test(n))return 'glute';
+ if(/랫|풀다운|풀업|풀업/.test(n))return 'vertical_pull';
+ if(/로우|티바/.test(n))return 'horizontal_pull';
+ if(/인클라인.*프레스|인클라인.*벤치/.test(n))return 'incline_push';
+ if(/벤치|체스트프레스|체스트프레스|딥스/.test(n))return 'horizontal_push';
+ if(/플라이|팩덱/.test(n))return 'fly';
+ if(/레터럴|사이드/.test(n))return 'lateral';
+ if(/페이스풀|리버스플라이|리어델트/.test(n))return 'rear_delt';
+ if(/컬/.test(n))return 'curl';
+ if(/트라이셉|푸쉬다운|푸시다운|스컬크러셔/.test(n))return 'triceps';
+ return 'other';}
+function v74Equipment(name){let n=String(name);if(/덤벨/.test(n))return '덤벨';if(/스미스/.test(n))return '스미스';if(/케이블|로프/.test(n))return '케이블';if(/머신|레그프레스|랫풀다운|랫 풀/.test(n))return '머신';if(/바벨|이지바/.test(n))return '바벨';return '기타'}
+function v74RankAlternatives(ex){let db={...BUILTIN_EXERCISE_DB,...userExerciseDb()},source=exerciseProfile(ex.name),primary=source?.primary||normalizeRole(ex.role),pattern=v74Movement(ex.name),equipment=v74Equipment(ex.name);
+ return Object.entries(db).filter(([n,p])=>n!==ex.name&&(p.primary===primary||(p.muscles||[]).includes(primary))).map(([name,p])=>{
+ let movement=v74Movement(name),same=movement===pattern&&pattern!=='other',eq=v74Equipment(name),score=(same?45:0)+(p.primary===primary?35:15)+(eq===equipment?10:0)+(eq!==equipment?10:0);
+ return {name,score,same,eq};}).sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name,'ko')).slice(0,5)}
+function v74AlternativeMarkup(i,ex){let matches=v74RankAlternatives(ex);return '<div class="rec"><b>v7.4 유사 동작 추천</b><div class="meta">움직임·주동근·기구를 기준으로 정렬한 참고 후보입니다. 통증을 유발하면 선택하지 마세요.</div>'+(matches.length?matches.map(x=>'<div class="row" style="margin-top:6px"><span>'+v7Escape(x.name)+' <small class="meta">'+(x.same?'동작 유사':'근육 유사')+' · '+x.eq+'</small></span><button class="small" onclick="v74ChooseAlternative('+i+','+JSON.stringify(x.name).replace(/'/g,'&#39;')+')">선택</button></div>').join(''):'<div class="meta">추천 가능한 후보가 없습니다.</div>')+'</div>'}
+function v74ChooseAlternative(i,name){return v75ChooseAlternative(i,name);let reason=prompt('대체 사유를 입력하세요: 장비 없음 / 자리 없음 / 통증 / 개인 선호','자리 없음');if(reason===null)return;if(!['장비 없음','자리 없음','통증','개인 선호'].includes(reason)){alert('제시된 사유 중 하나를 입력해 주세요.');return}let old=cfg.routines[day][i].name;if(!confirm(old+' → '+name+' 대체할까요? 오늘만 대체하거나 기본 루틴을 변경할 수 있습니다.'))return;
+ let log=v7Get();(log.events??=[]).push({type:'alternative',date:new Date().toISOString(),day,from:old,to:name,reason});v7Save(log);replaceExercise(i,name)}
+
+
+// v8.0: advisory, explainable coaching; existing history, plans and routines remain intact.
+const V80_KEY='physique-v80-coach';
+const V80_DEFAULTS=[
+ {id:'측면 어깨',aliases:['측면 어깨','측면삼각근','사이드델트'],priority:'최우선 성장',min:10,max:14},
+ {id:'등',aliases:['등','광배근','승모근','능형근','등 상부'],priority:'성장',min:10,max:14},
+ {id:'상부 가슴',aliases:['상부 가슴','윗가슴','대흉근 상부'],priority:'성장',min:6,max:10},
+ {id:'대퇴사두근',aliases:['대퇴사두근','대퇴사두','앞허벅지'],priority:'보수적 유지',min:0,max:99},
+ {id:'햄스트링',aliases:['햄스트링','뒤허벅지'],priority:'보수적 유지',min:0,max:99},
+ {id:'둔근',aliases:['둔근','엉덩이'],priority:'보수적 유지',min:0,max:99},
+ {id:'종아리',aliases:['종아리','비복근'],priority:'보수적 유지',min:0,max:99}
+];
+function v80State(){try{let s=JSON.parse(localStorage.getItem(V80_KEY)||'{}');return s&&typeof s==='object'?s:{}}catch{return {}}}
+function v80Save(s){localStorage.setItem(V80_KEY,JSON.stringify(s))}
+function v80Match(muscle,profile){return profile.aliases.some(a=>a===muscle||muscle.includes(a))}
+function v80WeekCount(week,profile){return Object.entries(week.direct).reduce((n,[k,v])=>n+(v80Match(k,profile)?v:0),0)}
+function v80HistoryFor(name){return getHistory().flatMap(s=>(s.exercises||[]).filter(e=>e.name===name&&e.type!=='cardio'&&v81SessionMatches(e,s,name)).map(e=>({date:s.date,sets:v7ValidSets(e).filter(x=>Number(x.w)>0&&Number(x.r)>0)}))).filter(x=>x.sets.length).slice(0,5)}
+function v80Trend(name){let rows=v80HistoryFor(name);if(rows.length<3)return {trend:'unknown',confidence:rows.length>=1?'낮음':'자료 없음',n:rows.length};
+ let score=x=>x.sets.reduce((sum,s)=>sum+Number(s.r),0)/x.sets.length;
+ // Avoid conflating different weights or different numbers of sets.
+ let stable=rows.every(r=>r.sets.length===rows[0].sets.length&&r.sets.every((s,i)=>Math.abs(Number(s.w)-Number(rows[0].sets[i].w))<0.001));
+ if(!stable)return {trend:'unknown',confidence:'낮음',n:rows.length,reason:'중량·세트 구성 변경'};
+ let latest=score(rows[0]),old=score(rows[Math.min(rows.length-1,2)]),delta=latest-old;
+ return {trend:delta>=1?'up':delta<=-1?'down':'flat',confidence:rows.length>=5?'높음':'보통',n:rows.length,delta};
+}
+function v80Recovery(){let a=v74TodayAdvice(),x=v7Get().conditions[v7LocalDate()];return {level:a.type,reason:a.reason,unknown:!x&&getCondition()==='normal'}}
+function v80Recommendation(profile){let weeks=[v73WeekData(2),v73WeekData(1),v73WeekData(0)],counts=weeks.map(w=>v80WeekCount(w,profile));
+ let s=v80State(),last=s.lastAccepted?.[profile.id],cooldown=last&&Date.now()-Date.parse(last)<14*86400000;
+ let matching=Object.entries(cfg.routines).flatMap(([routine,es])=>es.map((ex,index)=>({routine,index,ex}))).filter(x=>x.ex.type!=='cardio'&&x.ex.type!=='superset'&&v80Match(Object.entries(muscleWeights(x.ex.name,x.ex.role)).sort((a,b)=>b[1]-a[1])[0]?.[0]||'',profile));
+ let trends=matching.map(x=>v80Trend(recordName(x.routine,x.ex))).filter(x=>x.n>=3);
+ let bad=trends.length>=2&&trends.filter(x=>x.trend==='down').length>=2;
+ let improving=trends.some(x=>x.trend==='up');let recovery=v80Recovery();
+ let result={profile,counts,matching,action:'maintain',delta:0,reasons:[],confidence:trends.length>=2?'보통':'낮음'};
+ if(recovery.level==='rest'){result.action='rest';result.reasons.push('오늘 회복·통증 기록상 휴식을 우선 고려해야 합니다.');}
+ else if(recovery.level==='reduced'||bad){result.action='decrease';result.delta=-1;result.reasons.push(bad?'서로 다른 운동에서 반복수 저하가 확인되었습니다.':'오늘 컨디션이 좋지 않아 보조 세트 축소를 검토합니다.');}
+ else if(profile.priority==='보수적 유지'){result.reasons.push('하체도 분석하지만 운동 관련 실신 이력 때문에 자동 세트·중량 증가를 제안하지 않습니다.');}
+ else if(weeks[1].sessions===0||weeks[2].sessions===0){result.reasons.push('비교 가능한 이전 2주 기록이 부족합니다. 현재 운동량을 유지합니다.');}
+ else if(cooldown){result.reasons.push('최근 14일 이내 세트 조절을 승인했습니다. 추가 증가는 보류합니다.');}
+ else if(recovery.unknown){result.reasons.push('오늘 회복 상태가 입력되지 않아 증량을 보류합니다.');}
+ else if(counts[1]<profile.min&&counts[2]<profile.min&&trends.length>=1&&!trends.some(x=>x.trend==='down')&&!matching.some(x=>v7HasRecentPain(recordName(x.routine,x.ex)))){result.action='increase';result.delta=1;result.reasons.push('지난 2주 직접 세트가 목표 하한 미만이고 수행 저하가 확인되지 않았습니다. 기본 루틴 1세트 추가는 주간 운동 빈도에 따라 1세트 이상 증가할 수 있습니다.');}
+ else result.reasons.push(improving?'현재 운동량에서도 수행 성과가 개선되고 있습니다.':'현재 볼륨 유지 후 추가 기록을 확인합니다.');
+ if(profile.priority==='보수적 유지'&&result.action==='increase'){result.action='maintain';result.delta=0;}
+ if(!matching.length&&result.delta){result.action='maintain';result.delta=0;result.reasons.push('적용할 수 있는 해당 근육 운동을 찾지 못했습니다.');}
+ if(result.action==='increase'&&matching.length)result.target=matching.find(x=>/레터럴|사이드|인클라인|로우|풀다운/.test(x.ex.name))||matching[0];
+ if(result.action==='decrease'&&matching.length)result.target=matching.find(x=>Number(x.ex.sets)>1)||matching[0];
+ return result;
+}
+function v80RenderCoach(){let host=document.getElementById('v80Coach');if(!host)return;host.innerHTML=V80_DEFAULTS.map((p,i)=>{let r=v80Recommendation(p),action={increase:'기본 루틴 +1세트 검토',decrease:'1세트 축소 검토',maintain:'현행 유지',rest:'휴식 우선'}[r.action];let t=r.target;return `<div style="border-top:1px solid #374151;padding:12px 0"><div class="row"><b>${v7Escape(p.id)}</b><span class="badge">${v7Escape(p.priority)}</span></div><div class="meta">최근 완료 직접 세트 (2주 전 / 지난주 / 이번 주): ${r.counts.join(' / ')} · ${p.min===0?'현행 유지':`초기 목표 ${p.min}~${p.max}`} · 근거 신뢰도 ${r.confidence}</div><div class="rec"><b>${action}</b><br>${r.reasons.map(v7Escape).join(' ')}${t?`<br>변경 후보: ${v7Escape(t.routine)} · ${v7Escape(t.ex.name)} (${t.ex.sets} → ${Math.max(1,Number(t.ex.sets)+r.delta)}세트)`:''}</div>${t&&r.delta?`<button class="small" onclick="v80Apply(${i})">기본 루틴 변경 승인</button>`:''}</div>`}).join('')+'<div class="meta">기록이 없는 근육도 표시됩니다. 자동 증량은 실제 수행 기록·회복 입력이 있을 때만 검토합니다. 주간 가중 환산 세트는 위 차트에서 별도로 확인하세요. 이 앱은 의학적 안전성을 판정하지 않습니다.</div>'}
+function v80Apply(index){let profile=V80_DEFAULTS[index],r=v80Recommendation(profile),t=r.target;if(!t||!r.delta||r.action==='rest')return;
+ if(profile.priority==='보수적 유지'&&r.delta>0)return;
+ let ex=cfg.routines[t.routine]?.[t.index];if(!ex||ex.name!==t.ex.name)return alert('루틴이 변경되었습니다. 다시 분석하세요.');
+ let next=Math.max(1,Number(ex.sets)+r.delta);if(!confirm(`${t.routine} / ${ex.name}의 기본 세트를 ${ex.sets} → ${next}세트로 변경할까요?\n같은 루틴을 주 2회 수행하면 실제 주간 운동량은 2세트 변할 수 있습니다.\n완료 기록은 그대로 보존됩니다.`))return;
+ ex.sets=next;saveConfig();let s=v80State();s.lastAccepted??={};s.lastAccepted[profile.id]=new Date().toISOString();(s.events??=[]).push({at:new Date().toISOString(),muscle:profile.id,routine:t.routine,exercise:ex.name,from:next-r.delta,to:next,reason:r.reasons});v80Save(s);v80RenderCoach();renderProgram();if(t.routine===day)renderWorkout();alert('기본 루틴에 반영했습니다. 기존 기록은 변경되지 않았습니다.');
+}
+function v80ExerciseAdvice(ex,name){if(ex.type==='cardio'||ex.type==='superset')return '';let x=v80Trend(name),r=v80Recovery(),lower=/하체|레그|스쿼트|런지|데드리프트|힙쓰러스트|힙 쓰러스트/i.test(day+' '+name),pain=v7HasRecentPain(name);let lines=[];
+ if(x.n===0)lines.push('완료 기록 없음 · 기존 입력값을 기준으로 시작');else lines.push(`최근 ${x.n}회 비교 · 신뢰도 ${x.confidence} · ${x.trend==='up'?'반복수 개선':x.trend==='down'?'반복수 하락':x.trend==='flat'?'반복수 유지':'비교 보류'}`);
+ if(x.reason)lines.push(x.reason);if(pain)lines.push('최근 통증 기록: 증량 추천 보류');if(r.level!=='normal')lines.push('회복 상태: '+r.reason);if(lower)lines.push('하체 실신 이력: 자동 증량 권고 제한 · 운동 관련 실신은 의료 평가 권장');
+ return '<div class="rec"><b>v8.0 추천 근거</b><br>'+lines.map(v7Escape).join('<br>')+'</div>';
+}
+// Extend the existing advisory recommendation without changing target/actual set semantics.
+const v80PreviousRecommendation=recommendation;
+recommendation=function(ex,last){let result=v80PreviousRecommendation(ex,last),name=recordName(day,ex),trend=v80Trend(name),lower=/하체|레그|스쿼트|런지|데드리프트|힙쓰러스트|힙 쓰러스트/i.test(day+' '+name);
+ if((lower||v7HasRecentPain(name)||v80Recovery().level!=='normal')&&result.title.includes('증량'))return {title:'중량 유지 · 안전 제한',body:result.body+' 자동 증량 추천을 보류합니다.'};
+ if(trend.n>=3&&trend.trend==='down'&&result.title.includes('증량'))return {title:'중량 유지 · 최근 추세 확인',body:'최근 동일 중량·세트 구성에서 반복수 하락이 관찰됩니다. 일시적인 변화인지 확인하세요.'};
+ return result;
+};
+
+
+// v8.1.1 location presets: stable IDs, archived rather than destructive deletion.
+const V81_KEY='physique-v81-places';
+function v81State(){try{let x=JSON.parse(localStorage.getItem(V81_KEY)||'null');if(x&&Array.isArray(x.places)&&x.places.length)return x}catch{}return {places:[{id:'alldayfit',name:'올데이핏',active:true},{id:'apartment',name:'아파트',active:true}],exerciseFlags:{},activePlaceId:'alldayfit'}}
+function v81Save(x){localStorage.setItem(V81_KEY,JSON.stringify(x))}
+function v81Enabled(n){return v81State().exerciseFlags[n]===true}
+function v81ActivePlace(){let s=v81State();return s.places.some(p=>p.id===s.activePlaceId&&p.active!==false)?s.activePlaceId:(s.places.find(p=>p.active!==false)?.id||'')}
+function v81Suffix(n){return v81Enabled(n)?':place:'+v81ActivePlace():''}
+function v81SessionMatches(item,session,name){if(!v81Enabled(name))return true;return (Object.prototype.hasOwnProperty.call(item,'placeId')?item.placeId:(session.placeId??null))===v81ActivePlace()}
+function v81PlaceOptions(){let s=v81State(),active=v81ActivePlace();return s.places.filter(p=>p.active!==false).map(p=>`<option value="${v7Escape(p.id)}" ${p.id===active?'selected':''}>${v7Escape(p.name)}</option>`).join('')}
+function v811PendingDrafts(){
+ return Array.from({length:localStorage.length},(_,i)=>localStorage.key(i)).filter(k=>k&&k.startsWith('physique-draft:')).filter(k=>{
+  try{const d=JSON.parse(localStorage.getItem(k)||'null');if(!d||typeof d!=='object')return false;
+   if(d.done===true||d.warmup?.done===true)return true;
+   if(Array.isArray(d.sets)&&d.sets.some(x=>x&&Object.values(x).some(v=>v!==''&&v!==null&&v!==false&&v!==undefined)))return true;
+   return ['distance','minutes'].some(x=>d[x]!==undefined&&d[x]!==''&&d[x]!==null);
+  }catch{return true}
+ });
+}
+function v811GuardDrafts(action){
+ const drafts=v811PendingDrafts();
+ if(!drafts.length)return true;
+ alert('작성 중인 운동 기록 '+drafts.length+'건이 있습니다. '+action+' 전에 현재 운동을 완료·저장하세요. 기존 기록은 그대로 유지됩니다.');
+ return false;
+}
+function v81SelectPlace(id){let s=v81State();if(!s.places.some(p=>p.id===id&&p.active!==false))return;if(id===v81ActivePlace())return;if(!v811GuardDrafts('장소를 변경하기')){renderWorkout();return;}s.activePlaceId=id;v81Save(s);renderWorkout()}
+function v81AddPlace(){let name=prompt('새 장소 이름');if(name===null)return;name=name.trim();if(!name)return;let s=v81State();if(s.places.some(p=>p.name===name))return alert('같은 이름의 장소가 있습니다.');let id='place_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7);s.places.push({id,name,active:true});v81Save(s);v81RenderSettings()}
+function v81RenamePlace(id){let s=v81State(),p=s.places.find(p=>p.id===id);if(!p)return;let name=prompt('장소 이름 변경',p.name);if(name===null)return;name=name.trim();if(!name||s.places.some(q=>q.id!==id&&q.name===name))return alert('비어 있거나 중복된 이름입니다.');p.name=name;v81Save(s);v81RenderSettings();renderWorkout()}
+function v81ArchivePlace(id){let s=v81State(),p=s.places.find(p=>p.id===id);if(!p)return;if(s.places.filter(x=>x.active!==false).length<2)return alert('활성 장소를 최소 1개 유지해야 합니다.');if(!v811GuardDrafts('장소를 보관하기'))return;if(!confirm(p.name+' 장소를 보관할까요? 기존 운동 기록은 삭제되지 않습니다.'))return;p.active=false;if(s.activePlaceId===id)s.activePlaceId=s.places.find(x=>x.active!==false).id;v81Save(s);v81RenderSettings();renderWorkout()}
+function v81RestorePlace(id){let s=v81State(),p=s.places.find(p=>p.id===id);if(!p)return;p.active=true;v81Save(s);v81RenderSettings()}
+function v81ToggleExercise(name,enabled){let s=v81State();if(v81Enabled(name)===enabled)return;if(!v811GuardDrafts('장소 구분 설정을 변경하기')){v81RenderSettings();return;}s.exerciseFlags[name]=enabled;v81Save(s);v81RenderSettings();renderWorkout()}
+function v81RenderSettings(){let s=v81State(),host=document.getElementById('v81Places'),exHost=document.getElementById('v81Exercises');if(!host||!exHost)return;host.innerHTML=s.places.map(p=>`<div class="row" style="margin:9px 0"><span>${v7Escape(p.name)}${p.active===false?' (보관됨)':''}</span><span><button class="small" onclick="v81RenamePlace(${JSON.stringify(p.id)})">이름 변경</button> <button class="small" onclick="${p.active===false?'v81RestorePlace':'v81ArchivePlace'}(${JSON.stringify(p.id)})">${p.active===false?'복원':'보관'}</button></span></div>`).join('');let names=[...new Set(Object.values(cfg.routines).flatMap(es=>es.filter(e=>e.type!=='cardio'&&e.role!=='유산소').flatMap(e=>e.variants||[e.name])))].sort((a,b)=>a.localeCompare(b,'ko'));exHost.innerHTML=names.map(n=>`<label class="row" style="padding:8px 0;border-bottom:1px solid #333"><span>${v7Escape(n)}</span><span><input type="checkbox" ${v81Enabled(n)?'checked':''} onchange="v81ToggleExercise(${JSON.stringify(n)},this.checked)"> 장소 구분</span></label>`).join('')+'<div class="meta">운동 작성 중에는 장소 변경·보관·구분 전환이 제한됩니다. 장소 구분 ON 후 이전 장소 미지정 기록은 자동 귀속하지 않습니다. OFF로 전환해도 과거 장소별 기록은 보존됩니다.</div>'}
 
 page("work");renderWorkout();tick();resetBodyCompForm();
 </script><script>
@@ -556,5 +921,31 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./service-worker.js").catch(console.error);
   });
 }
+</script>
+
+<script>
+/* v8.2 navigation and layout adapter: existing functions and localStorage keys remain authoritative. */
+(function(){
+ const oldPage=window.page,oldRenderWorkout=window.renderWorkout;
+ const el=id=>document.getElementById(id);
+ function moveCard(marker,dest){const node=el(marker);const card=node?.closest('.card');if(card&&dest)dest.appendChild(card);return card}
+ function wrapDetail(card,title){if(!card||card.closest('details'))return;const details=document.createElement('details');details.className='fp-collapse';const summary=document.createElement('summary');summary.textContent=title;card.before(details);details.append(summary,card)}
+ function setup(){
+  const seq=el('fpScheduleSequence'),history=el('fpScheduleHistory'),ready=el('fpScheduleReadiness'),growth=el('fpGrowthContents');
+  moveCard('v7Schedule',seq);moveCard('v7Sleep',ready);moveCard('v7Volume',growth);moveCard('v80Coach',growth);moveCard('v7Graph',growth);
+  moveCard('bodyCompSummary',growth);const progressBody=el('progressBody');if(progressBody)growth.prepend(progressBody);
+  const historyBody=el('historyBody'),historyModal=el('historyModal');if(historyBody)history.append(historyBody);if(historyModal)history.append(historyModal);
+  const oldProgress=el('progress');if(oldProgress)oldProgress.classList.remove('show');
+  const oldPlan=el('plan');if(oldPlan)oldPlan.classList.remove('show');
+  const settings=el('program');if(settings){const cards=[...settings.querySelectorAll(':scope > .card')];const labels=['데이터 관리','운동 환경','운동 라이브러리','운동 라이브러리','운동 라이브러리','루틴 관리','루틴 관리','현재 프로그램'];cards.forEach((c,i)=>{let head=document.createElement('div');head.className='fp-group-title';head.textContent=labels[i]||'기타 설정';c.before(head)})}
+  fpScheduleTab('sequence');fpRefreshHome();
+ }
+ window.fpRefreshHome=function(){try{const d=v7Get(),name=d.sequence[d.nextIndex%d.sequence.length]||day;el('fpNextRoutine').textContent=name;const p=v81State();const active=(p?.places||[]).find(x=>x.id===v81ActivePlace());el('fpHomeLocation').textContent=(active?.name||'장소 미지정')+' · 다음 루틴';const base=cfg.routines[name]||[];el('fpNextExercises').innerHTML=base.map(x=>'<div style="padding:9px 0;border-bottom:1px solid #3a493e"><b>'+v7Escape(x.name)+'</b><div class="meta">'+v7Escape(x.role||'')+' · '+(x.sets||1)+'세트</div></div>').join('');const start=v7WeekStart(0),end=new Date(start);end.setDate(end.getDate()+7);el('fpWeekSessions').textContent=getHistory().filter(x=>new Date(x.date)>=start&&new Date(x.date)<end).length+'회';}catch(e){console.warn('Home preview:',e)}};
+ window.fpStartWorkout=function(){try{v7SelectNext()}catch(e){page('work')}};
+ window.fpScheduleTab=function(t){for(const key of ['sequence','history','readiness']){el('fpSchedule'+key[0].toUpperCase()+key.slice(1))?.classList.toggle('fp-hidden',key!==t);el('fp-s-'+key)?.classList.toggle('active',key===t)}if(t==='history')renderHistory();if(t==='sequence')v7RenderPlan()};
+ window.page=function(p){if(['progress','plan'].includes(p))p=p==='progress'?'growth':'schedule';document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'));el(p)?.classList.add('show');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));el('n-'+p)?.classList.add('active');if(p==='home')fpRefreshHome();if(p==='growth'){renderProgress();v7RenderPlan()}if(p==='schedule'){v7RenderPlan();renderHistory()}if(p==='program'){renderProgram();v81RenderSettings()}window.scrollTo?.(0,0)};
+ window.renderWorkout=function(){oldRenderWorkout();document.querySelectorAll('#workout > .card').forEach((card,i)=>{if(i<2)return;const title=card.querySelector('.name');if(!title)return;const candidates=[...card.querySelectorAll('.rec')];if(candidates.length){const detail=document.createElement('details');detail.className='fp-collapse';const summary=document.createElement('summary');summary.textContent='추천 근거 · 회복 안내';detail.appendChild(summary);candidates.forEach(x=>detail.appendChild(x));const rows=card.querySelector('[id^="rows-"]');if(rows)rows.after(detail);else card.appendChild(detail)}const alt=card.querySelector('.alt');if(alt){alt.setAttribute('aria-label','대체 운동 옵션')}})};
+ setup();window.renderWorkout();window.page('home');
+})();
 </script>
 </body></html>
